@@ -2,30 +2,26 @@
 <html>
   <head>
     <title>Doodles.io</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <link href="style.css" rel="stylesheet">
   </head>
   <body>
-
-  <div class="container">
-<nav>
-        Color : <select id="selColor">
-            <option value="black">black</option>
-            <option value="blue" selected="selected">blue</option>
-            <option value="red">red</option>
-            <option value="green">green</option>
+    <div class="container">
+      <nav>
+        <select id="color">
+          <option value="black">Black</option>
+          <option value="blue" selected="selected">Blue</option>
+          <option value="red">Red</option>
+          <option value="green">Green</option>
         </select>
-     <button id="eraser">Eraser</button></nav>
-  <div id="heading"><input type="text" placeholder="Type your title here..." /></div>
-  <div id="sketch">
-  <canvas id="tools_sketch" class="notepad"></canvas>
-  </div>
-</div>
-
-    
-
-
-     <script src="app.js"></script>
-     </body>
-     </html>
+      </nav>
+      <div id="heading">
+        <input type="text" placeholder="Type your title here..." />
+      </div>
+      <div id="sketch">
+        <canvas id="tools_sketch" class="notepad"></canvas>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
