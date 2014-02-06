@@ -3,35 +3,21 @@
   <head>
     <title>Doodles.io</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <link href="style.css" rel="stylesheet">
   </head>
   <body>
 
   <div class="container">
-  Line width : <select id="selWidth">
-            <option value="1">1</option>
-            <option value="3">3</option>
-            <option value="5">5</option>
-            <option value="7">7</option>
-            <option value="9" selected="selected">9</option>
-            <option value="11">11</option>
-        </select> 
+<nav>
         Color : <select id="selColor">
             <option value="black">black</option>
             <option value="blue" selected="selected">blue</option>
             <option value="red">red</option>
             <option value="green">green</option>
-            <option value="yellow">yellow</option>
-            <option value="gray">gray</option>
-        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button id="rectangle">Rect</button>
-    <button id="circle">circle</button>
-        <button id="line">Line</button>
-    <button id="brush">brush</button>
-    <button id="addtext">Add Text</button>
-     <button id="eraser">Eraser</button>
-  <h1>Notes</h1>
+        </select>
+     <button id="eraser">Eraser</button></nav>
+  <div id="heading"><input type="text" placeholder="Type your title here..." /></div>
   <div id="sketch">
   <canvas id="tools_sketch" class="notepad"></canvas>
   </div>
