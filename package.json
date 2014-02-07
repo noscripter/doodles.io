@@ -1,0 +1,43 @@
+{
+  "name": "doodles.io",
+  "description": "Description coming soon.",
+  "version": "0.0.1",
+  "main": "lib/app.js",
+  "homepage": "http://doodles.io",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dcgauld/doodles.io.git"
+  },
+  "contributors": [
+    {
+      "name": "David Gauld",
+      "email": "dcgauld@gmail.com",
+      "web": "http://dcgauld.com"
+    },
+    {
+      "name": "Josh Croad",
+      "email": "joshcroad@gmail.com",
+      "web": "http://joshcroad.com"
+    }
+  ],
+  "dependencies": {
+    "express": "3.3.x",
+    "jade": "0.32.x",
+    "async": "0.2.x",
+    "passport": "0.1.x",
+    "passport-local": "0.1.x",
+    "mongoose": "3.6.x",
+    "bcrypt": "0.7.x",
+    "express-hbs": "0.5.x"
+  },
+  "devDependencies": {
+    "nodemon": "0.7.x"
+  },
+  "subdomain": "doodles.io",
+  "scripts": {
+    "start": ""
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
