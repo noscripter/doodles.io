@@ -28,7 +28,8 @@
     "passport-local": "0.1.x",
     "mongoose": "3.6.x",
     "bcrypt": "0.7.x",
-    "express-hbs": "0.5.x"
+    "express-hbs": "0.5.x",
+    "xtend": "2.1.x"
   },
   "devDependencies": {
     "nodemon": "0.7.x"

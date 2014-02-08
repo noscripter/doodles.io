@@ -36,6 +36,7 @@ Doodle.prototype = {
     // each time, and we need to have a reference to onPaint to be able to
     // remove it from an event listener later on.
     var onPaint = this.onPaint.bind(this);
+    var saveButton = document.getElementById('save');
     
     // Capture mouse movements.
     this.canvas_temp.addEventListener('mousemove', function (e) {
@@ -65,6 +66,12 @@ Doodle.prototype = {
       
       this.points = [];
     }.bind(this), false);
+
+    // Save the current drawing.
+    save.addEventListener('click', function (e) {
+      e.preventDefault();
+      this.save();
+    }.bind(this));
   },
   
   onPaint: function () {
@@ -107,6 +114,18 @@ Doodle.prototype = {
     // Better not leave those last two points out.
     this.context_temp.quadraticCurveTo(this.points[i].x, this.points[i].y, this.points[i + 1].x, this.points[i + 1].y);
     this.context_temp.stroke();
+  },
+
+  save: function () {
+    var title = document.getElementById('title').value;
+    var image = this.canvas.toDataURL();
+
+    $.post('/new', {
+      title: title,
+      image: image
+    }).done(function (data) {
+      alert('Success!');
+    });
   }
 };
 
