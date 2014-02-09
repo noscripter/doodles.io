@@ -162,7 +162,7 @@ Doodle.prototype = {
           image: response.data.image,
           _id: response.data._id
         };
-        history.pushState(null, null, 'http://localhost:3000/' + response.data.slug);
+        history.pushState(null, null, '/' + response.data.slug);
         document.getElementById('save_text').innerHTML = 'Saved!';
         this.timer = setTimeout(function () {
           document.getElementById('save_text').innerHTML = '';
