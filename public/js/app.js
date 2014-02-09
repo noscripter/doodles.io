@@ -54,6 +54,7 @@ Doodle.prototype = {
 
     title.addEventListener('keyup', function (e) {
       if (e.target.value.length !== this.titleLength) {
+        document.getElementById('save_text').innerHTML = 'Saving...';
         this.bufferSave();
         this.titleLength = e.target.value.length;
       }
@@ -77,6 +78,7 @@ Doodle.prototype = {
     
     // Stop drawing, you. Stop it now!
     this.canvas_temp.addEventListener('mouseup', function () {
+      document.getElementById('save_text').innerHTML = 'Saving...';
       // Save as soon as the drawing has stopped.
       this.bufferSave();
 
@@ -161,13 +163,20 @@ Doodle.prototype = {
           _id: response.data._id
         };
         history.pushState(null, null, 'http://localhost:3000/' + response.data.slug);
+        document.getElementById('save_text').innerHTML = 'Saved!';
+        this.timer = setTimeout(function () {
+          document.getElementById('save_text').innerHTML = '';
+        }.bind(this), 2000);
       }.bind(this));
     } else {
       $.post('/' + existingDoodle.slug, {
         title: title,
         image: image
       }).done(function (response) {
-        console.log('Success!');
+        document.getElementById('save_text').innerHTML = 'Saved!';
+        this.timer = setTimeout(function () {
+          document.getElementById('save_text').innerHTML = '';
+        }.bind(this), 2000);
       }.bind(this));
     }
   }
