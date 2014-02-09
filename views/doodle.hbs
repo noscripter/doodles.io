@@ -14,7 +14,6 @@
           <option value="red">Red</option>
           <option value="green">Green</option>
         </select>
-        <a href="" id="save">Save</a>
       </nav>
       <div id="heading">
         <input type="text" id="title" placeholder="Type your title here..." />
@@ -24,6 +23,18 @@
       </div>
     </div>
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script>
+    {{#if doodle}}
+      var existingDoodle = {
+        title: '{{doodle.title}}',
+        slug: '{{doodle.slug}}',
+        image: '{{doodle.image}}',
+        _id: '{{doodle._id}}'
+      };
+    {{else}}
+      var existingDoodle = null;
+    {{/if}}
+    </script>
     <script src="/public/js/app.js"></script>
   </body>
 </html>
