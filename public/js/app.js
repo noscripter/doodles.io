@@ -25,9 +25,23 @@ function Doodle () {
   
   // Store the mouse points when drawing.
   this.points = [];
-  
-  // Initialise the doodle's events.
-  this.initEvents();
+
+  this.timer = null;
+
+  // Determines if we're editing an existing doodle or creating a new one.
+  if (existingDoodle) {
+    document.getElementById('title').value = existingDoodle.title;
+    var image = new Image();
+    image.src = existingDoodle.image;
+    image.onload = function () {
+      this.context.drawImage(image, 0, 0, 500, 500);
+    }.bind(this);
+    this.titleLength = existingDoodle.title.length;
+    this.initEvents();
+  } else {
+    this.titleLength = 0;
+    this.initEvents();
+  }
 }
 
 Doodle.prototype = {
@@ -36,7 +50,14 @@ Doodle.prototype = {
     // each time, and we need to have a reference to onPaint to be able to
     // remove it from an event listener later on.
     var onPaint = this.onPaint.bind(this);
-    var saveButton = document.getElementById('save');
+    var title = document.getElementById('title');
+
+    title.addEventListener('keyup', function (e) {
+      if (e.target.value.length !== this.titleLength) {
+        this.bufferSave();
+        this.titleLength = e.target.value.length;
+      }
+    }.bind(this), false);
     
     // Capture mouse movements.
     this.canvas_temp.addEventListener('mousemove', function (e) {
@@ -56,22 +77,23 @@ Doodle.prototype = {
     
     // Stop drawing, you. Stop it now!
     this.canvas_temp.addEventListener('mouseup', function () {
+      // Save as soon as the drawing has stopped.
+      this.bufferSave();
+
       this.canvas_temp.removeEventListener('mousemove', onPaint, false);
       
       // Write down to the real canvas.
-      this.context.drawImage(this.canvas_temp, 0, 0);
+      var image = new Image();
+      image.src = this.canvas_temp.toDataURL();
+      image.onload = function () {
+        this.context.drawImage(image, 0, 0);
+      }.bind(this);
       
       // Clear the temporary canvas.
       this.context_temp.clearRect(0, 0, this.canvas_temp.width, this.canvas_temp.height);
       
       this.points = [];
     }.bind(this), false);
-
-    // Save the current drawing.
-    save.addEventListener('click', function (e) {
-      e.preventDefault();
-      this.save();
-    }.bind(this));
   },
   
   onPaint: function () {
@@ -116,16 +138,38 @@ Doodle.prototype = {
     this.context_temp.stroke();
   },
 
+  // Prevents saving every time a change is made. Only make them (at most) every 1 second.
+  bufferSave: function () {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(this.save.bind(this), 1000);
+  },
+
   save: function () {
     var title = document.getElementById('title').value;
     var image = this.canvas.toDataURL();
 
-    $.post('/new', {
-      title: title,
-      image: image
-    }).done(function (data) {
-      alert('Success!');
-    });
+    // Only save a new one if we're not editing an existing doodle.
+    if (!existingDoodle) {
+      $.post('/new', {
+        title: title,
+        image: image
+      }).done(function (response) {
+        existingDoodle = {
+          title: response.data.title,
+          slug: response.data.slug,
+          image: response.data.image,
+          _id: response.data._id
+        };
+        history.pushState(null, null, 'http://localhost:3000/' + response.data.slug);
+      }.bind(this));
+    } else {
+      $.post('/' + existingDoodle.slug, {
+        title: title,
+        image: image
+      }).done(function (response) {
+        console.log('Success!');
+      }.bind(this));
+    }
   }
 };
 
