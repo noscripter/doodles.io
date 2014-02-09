@@ -79,11 +79,11 @@ nav {
   color: rgba(0,0,0,.7);
   margin: 0;
   display: block;
-  width: 100%;
   box-sizing: border-box;
   border-radius: 0 0 5px 5px;
   border-top: 0;
   resize: vertical;
+  width: 500px;
   height: 500px;
   background-image: linear-gradient(0deg, transparent, transparent 24px, #f0c9ca 24px, #f0c9ca 25px, transparent 25px, transparent 27px, #f0c9ca 27px, #f0c9ca 28px, transparent 28px), linear-gradient(#fff, #fff 17px, #e3ebf3 17px, #e3ebf3 18px);
   background-size: 36px 18px, 36px 18px;
@@ -91,6 +91,8 @@ nav {
 }
 
 #tmp_canvas {
+  width: 500px;
+  height: 500px;
   position: absolute;
   left: 0;
   right: 0;

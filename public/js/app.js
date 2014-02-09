@@ -6,8 +6,8 @@ function Doodle () {
   this.style = getComputedStyle(this.sketch);
   
   // Canvas dimensions.
-  this.canvas.width = parseInt(this.style.getPropertyValue('width'));
-  this.canvas.height = parseInt(this.style.getPropertyValue('height'));
+  this.canvas.width = parseInt(this.style.getPropertyValue('width')) * 2; // For retina.
+  this.canvas.height = parseInt(this.style.getPropertyValue('height')) * 2; // For retina.
   
   // Temporary canvas variables.
   this.canvas_temp = document.createElement('canvas');
@@ -34,7 +34,7 @@ function Doodle () {
     var image = new Image();
     image.src = existingDoodle.image;
     image.onload = function () {
-      this.context.drawImage(image, 0, 0, 500, 500);
+      this.context.drawImage(image, 0, 0, 1000, 1000);
     }.bind(this);
     this.titleLength = existingDoodle.title.length;
     this.initEvents();
@@ -69,8 +69,8 @@ Doodle.prototype = {
     this.canvas_temp.addEventListener('mousedown', function (e) {
       this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
       this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
-      this.mouse_start.x = this.mouse.x;
-      this.mouse_start.y = this.mouse.y;
+      this.mouse_start.x = this.mouse.x * 2;
+      this.mouse_start.y = this.mouse.y * 2;
       this.canvas_temp.addEventListener('mousemove', onPaint, false);
       this.onPaint();
     }.bind(this), false);
@@ -99,15 +99,15 @@ Doodle.prototype = {
   onPaint: function () {
     // Add current point to points array.
     this.points.push({
-      x: this.mouse.x,
-      y: this.mouse.y
+      x: this.mouse.x * 2,
+      y: this.mouse.y * 2
     });
     
     // Sets up options for drawing such as line width, stroke color etc.
     if (this.points.length < 3) {
       var b = this.points[0],
           color = document.getElementById('color');
-      this.context_temp.lineWidth = 2;
+      this.context_temp.lineWidth = 4; // Actual size is 2 but retina means it's doubled.
       this.context_temp.lineJoin = 'round';
       this.context_temp.lineCap = 'round';
       this.context_temp.strokeStyle = color.value;
