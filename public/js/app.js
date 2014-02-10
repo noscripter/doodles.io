@@ -65,6 +65,12 @@ Doodle.prototype = {
       this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
       this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
     }.bind(this), false);
+
+    // Mobile
+    this.canvas_temp.addEventListener('touchmove', function (e) {
+      this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
+      this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
+    }.bind(this), false);
     
     // Draw it bitches.
     this.canvas_temp.addEventListener('mousedown', function (e) {
@@ -75,6 +81,16 @@ Doodle.prototype = {
       this.canvas_temp.addEventListener('mousemove', onPaint, false);
       this.onPaint();
     }.bind(this), false);
+
+    // Mobile
+    this.canvas_temp.addEventListener('touchstart', function (e) {
+      this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
+      this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
+      this.mouse_start.x = this.mouse.x * 2;
+      this.mouse_start.y = this.mouse.y * 2;
+      this.canvas_temp.addEventListener('touchmove', onPaint, false);
+      this.onPaint();
+    }.bind(this), false);
     
     // Stop drawing, you. Stop it now!
     this.canvas_temp.addEventListener('mouseup', function () {
@@ -83,6 +99,28 @@ Doodle.prototype = {
       this.bufferSave();
 
       this.canvas_temp.removeEventListener('mousemove', onPaint, false);
+      
+      // Write down to the real canvas.
+      var image = new Image();
+      image.src = this.canvas_temp.toDataURL();
+      image.onload = function () {
+        this.context.drawImage(image, 0, 0);
+      }.bind(this);
+      
+      // Clear the temporary canvas.
+      this.context_temp.clearRect(0, 0, this.canvas_temp.width, this.canvas_temp.height);
+      
+      this.points = [];
+    }.bind(this), false);
+
+    // Mobile
+    // Stop drawing, you. Stop it now!
+    this.canvas_temp.addEventListener('touchend', function () {
+      document.getElementById('save_text').innerHTML = 'Saving...';
+      // Save as soon as the drawing has stopped.
+      this.bufferSave();
+
+      this.canvas_temp.removeEventListener('touchmove', onPaint, false);
       
       // Write down to the real canvas.
       var image = new Image();
