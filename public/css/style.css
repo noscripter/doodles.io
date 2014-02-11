@@ -27,6 +27,21 @@ body {
   line-height: 100%;
 }
 
+.bar {
+  width: 100%;
+  text-align: center;
+  height: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 2rem;
+}
+
+.bar .logo {
+  width: 150px;
+  opacity: 0.2;
+}
+
 .container {
   box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.15);
   width: 100%;
