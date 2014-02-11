@@ -6,8 +6,8 @@ function Doodle () {
   this.style = getComputedStyle(this.sketch);
   
   // Canvas dimensions.
-  this.canvas.width = parseInt(this.style.getPropertyValue('width')) * 2; // For retina.
-  this.canvas.height = parseInt(this.style.getPropertyValue('height')) * 2; // For retina.
+  this.canvas.width = 1000; // For retina.
+  this.canvas.height = 1000; // For retina.
   
   // Temporary canvas variables.
   this.canvas_temp = document.createElement('canvas');
@@ -49,7 +49,7 @@ Doodle.prototype = {
     // onPaint is stored as a reference as binding creates a new function
     // each time, and we need to have a reference to onPaint to be able to
     // remove it from an event listener later on.
-    var onPaint = this.onPaint.bind(this);
+    this.onPaintHandler = this.onPaint.bind(this);
     var title = document.getElementById('title');
 
     title.addEventListener('keyup', function (e) {
@@ -115,17 +115,24 @@ Doodle.prototype = {
     this.context_temp.stroke();
   },
   
-  mousemoveHandler: function () {
-    this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
-    this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
+  mousemoveHandler: function (e) {
+    e.preventDefault();
+    var xPos = 500 / (this.canvas.offsetWidth);
+    var yPos = 500 / (this.canvas.offsetHeight);
+    this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX * xPos : e.layerX * xPos;
+    this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY * yPos : e.layerY * yPos;
   },
   
   mousedownHandler: function (e) {
-    this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
-    this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
+    e.preventDefault();
+    var xPos = 500 / (this.canvas.offsetWidth);
+    var yPos = 500 / (this.canvas.offsetHeight);
+    this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX * xPos : e.layerX * xPos;
+    this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY * yPos : e.layerY * yPos;
     this.mouse_start.x = this.mouse.x * 2;
     this.mouse_start.y = this.mouse.y * 2;
-    this.canvas_temp.addEventListener('mousemove', onPaint, false);
+    this.canvas_temp.addEventListener('mousemove', this.onPaintHandler, false);
+    this.canvas_temp.addEventListener('touchmove', this.onPaintHandler, false);
     this.onPaint();
   },
   
@@ -134,7 +141,8 @@ Doodle.prototype = {
     // Save as soon as the drawing has stopped.
     this.bufferSave();
 
-    this.canvas_temp.removeEventListener('mousemove', onPaint, false);
+    this.canvas_temp.removeEventListener('mousemove', this.onPaintHandler, false);
+    this.canvas_temp.removeEventListener('touchmove', this.onPaintHandler, false);
     
     // Write down to the real canvas.
     var image = new Image();

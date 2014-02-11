@@ -7,6 +7,12 @@
   user-select: none;
 }
 
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
 body {
   background: #eee9e2;
   min-height: 100%;
@@ -14,20 +20,41 @@ body {
   font: 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  line-height: 100%;
 }
 
 .container {
   box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.15);
-  width: 500px;
-  height: 550px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 550px;
   border-radius: 5px;
   overflow: hidden;
   border: 1px solid rgba(0,0,0,.5);
-  position: absolute;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 51px;
   top: 50%;
   left: 50%;
-  margin-top: -275px;
-  margin-left: -250px;
+  margin-top: -276px;
+  margin-left: -251px;
+}
+
+.container .dummy {
+  margin-top: 100%;
+}
+
+/* Maintains 1:1 aspect ratio */
+.container .main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 nav {
@@ -62,6 +89,10 @@ nav {
   background: none;
   font: inherit;
   line-height: 16px;
+  z-index: 999999;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .container #heading:after {
@@ -71,6 +102,10 @@ nav {
   bottom: 4px;
   left: 0;
   border-bottom: 1px dashed rgba(255,255,255,.4);
+}
+
+#sketch {
+  position: relative;
 }
 
 .container .notepad {
@@ -83,20 +118,27 @@ nav {
   border-radius: 0 0 5px 5px;
   border-top: 0;
   resize: vertical;
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   background-image: linear-gradient(0deg, transparent, transparent 24px, #f0c9ca 24px, #f0c9ca 25px, transparent 25px, transparent 27px, #f0c9ca 27px, #f0c9ca 28px, transparent 28px), linear-gradient(#fff, #fff 17px, #e3ebf3 17px, #e3ebf3 18px);
   background-size: 36px 18px, 36px 18px;
   background-repeat: repeat-y, repeat;
 }
 
 #tmp_canvas {
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  top: 51px;
+  top: 0;
   cursor: crosshair;
+}
+
+@media screen and (max-width: 502px) { /* 2px added for borders (I think) */
+  .container {
+    left: 0;
+    margin-left: 0;
+  }
 }
