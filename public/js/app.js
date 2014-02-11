@@ -61,79 +61,16 @@ Doodle.prototype = {
     }.bind(this), false);
     
     // Capture mouse movements.
-    this.canvas_temp.addEventListener('mousemove', function (e) {
-      this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
-      this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
-    }.bind(this), false);
-
-    // Mobile
-    this.canvas_temp.addEventListener('touchmove', function (e) {
-      this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
-      this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
-    }.bind(this), false);
+    this.canvas_temp.addEventListener('mousemove', this.mousemoveHandler.bind(this), false);
+    this.canvas_temp.addEventListener('touchmove', this.mousemoveHandler.bind(this), false);
     
     // Draw it bitches.
-    this.canvas_temp.addEventListener('mousedown', function (e) {
-      this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
-      this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
-      this.mouse_start.x = this.mouse.x * 2;
-      this.mouse_start.y = this.mouse.y * 2;
-      this.canvas_temp.addEventListener('mousemove', onPaint, false);
-      this.onPaint();
-    }.bind(this), false);
-
-    // Mobile
-    this.canvas_temp.addEventListener('touchstart', function (e) {
-      this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
-      this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
-      this.mouse_start.x = this.mouse.x * 2;
-      this.mouse_start.y = this.mouse.y * 2;
-      this.canvas_temp.addEventListener('touchmove', onPaint, false);
-      this.onPaint();
-    }.bind(this), false);
+    this.canvas_temp.addEventListener('mousedown', this.mousedownHandler.bind(this), false);
+    this.canvas_temp.addEventListener('touchstart', this.mousedownHandler.bind(this), false);
     
     // Stop drawing, you. Stop it now!
-    this.canvas_temp.addEventListener('mouseup', function () {
-      document.getElementById('save_text').innerHTML = 'Saving...';
-      // Save as soon as the drawing has stopped.
-      this.bufferSave();
-
-      this.canvas_temp.removeEventListener('mousemove', onPaint, false);
-      
-      // Write down to the real canvas.
-      var image = new Image();
-      image.src = this.canvas_temp.toDataURL();
-      image.onload = function () {
-        this.context.drawImage(image, 0, 0);
-      }.bind(this);
-      
-      // Clear the temporary canvas.
-      this.context_temp.clearRect(0, 0, this.canvas_temp.width, this.canvas_temp.height);
-      
-      this.points = [];
-    }.bind(this), false);
-
-    // Mobile
-    // Stop drawing, you. Stop it now!
-    this.canvas_temp.addEventListener('touchend', function () {
-      document.getElementById('save_text').innerHTML = 'Saving...';
-      // Save as soon as the drawing has stopped.
-      this.bufferSave();
-
-      this.canvas_temp.removeEventListener('touchmove', onPaint, false);
-      
-      // Write down to the real canvas.
-      var image = new Image();
-      image.src = this.canvas_temp.toDataURL();
-      image.onload = function () {
-        this.context.drawImage(image, 0, 0);
-      }.bind(this);
-      
-      // Clear the temporary canvas.
-      this.context_temp.clearRect(0, 0, this.canvas_temp.width, this.canvas_temp.height);
-      
-      this.points = [];
-    }.bind(this), false);
+    this.canvas_temp.addEventListener('mouseup', this.mouseupHandler.bind(this), false);
+    this.canvas_temp.addEventListener('touchend', this.mouseupHandler.bind(this), false);
   },
   
   onPaint: function () {
@@ -176,6 +113,40 @@ Doodle.prototype = {
     // Better not leave those last two points out.
     this.context_temp.quadraticCurveTo(this.points[i].x, this.points[i].y, this.points[i + 1].x, this.points[i + 1].y);
     this.context_temp.stroke();
+  },
+  
+  mousemoveHandler: function () {
+    this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
+    this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
+  },
+  
+  mousedownHandler: function (e) {
+    this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
+    this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
+    this.mouse_start.x = this.mouse.x * 2;
+    this.mouse_start.y = this.mouse.y * 2;
+    this.canvas_temp.addEventListener('mousemove', onPaint, false);
+    this.onPaint();
+  },
+  
+  mouseupHandler: function () {
+    document.getElementById('save_text').innerHTML = 'Saving...';
+    // Save as soon as the drawing has stopped.
+    this.bufferSave();
+
+    this.canvas_temp.removeEventListener('mousemove', onPaint, false);
+    
+    // Write down to the real canvas.
+    var image = new Image();
+    image.src = this.canvas_temp.toDataURL();
+    image.onload = function () {
+      this.context.drawImage(image, 0, 0);
+    }.bind(this);
+    
+    // Clear the temporary canvas.
+    this.context_temp.clearRect(0, 0, this.canvas_temp.width, this.canvas_temp.height);
+    
+    this.points = [];
   },
 
   // Prevents saving every time a change is made. Only make them (at most) every 1 second.
