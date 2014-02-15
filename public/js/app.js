@@ -165,12 +165,13 @@ Doodle.prototype = {
 
   save: function () {
     var image = this.canvasElement.toDataURL();
-    
+
     // Only save a new one if we're not editing an existing doodle.
     if (this.doodle) {
       $.post('/' + this.doodle.slug, {
         title: this.titleElement.value,
-        image: image
+        image: image,
+        checksum: sessionStorage.checksum ? sessionStorage.checksum : null
       }).done(function (response) {
         this.messageElement.innerHTML = 'Saved!';
         this.timer = setTimeout(function () {
@@ -188,6 +189,7 @@ Doodle.prototype = {
           image: response.data.image,
           _id: response.data._id
         };
+        sessionStorage.setItem('checksum', response.data.checksum);
         history.pushState(null, null, '/' + response.data.slug);
         this.messageElement.innerHTML = 'Saved!';
         this.timer = setTimeout(function () {
