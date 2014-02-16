@@ -177,6 +177,7 @@ Doodle.prototype = {
         // This is done by comparing the slugs as they are unique
         if (response.success) {
           if (response.data) {
+            this.doodle = response.data;
             sessionStorage.setItem('checksum', response.data.checksum);
             history.pushState(null, null, '/' + response.data.slug);
             this.messageElement.innerHTML = 'Forked!';
