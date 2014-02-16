@@ -135,8 +135,7 @@ nav {
   text-align: center;
   width: 100%;
   height: 50px;
-  color: #fff;
-  text-shadow: 0 1px 1px rgba(0,0,0,.6);
+  color: rgba(255, 255, 255, 1);
   border: none;
   outline: none;
   background: none;
@@ -146,6 +145,10 @@ nav {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.container #heading input.placeholder {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .container #heading:after {
