@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Doodles.io</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link href="/public/css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="bar">
+      <div class="left">
+        <strong><a href="/new">New Doodle</a></strong>
+      </div>
+      <div class="right">
+        {{#if user}}
+          Howdy, {{user.username}}!&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/logout">Logout</a></strong>
+        {{else}}
+          <a href="/login">Login</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/register">Register</a></strong>
+        {{/if}}
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    {{{body}}}
+  </body>
+</html>

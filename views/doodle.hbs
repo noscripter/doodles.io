@@ -1,52 +1,31 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Doodles.io</title>
-    <meta name="viewport" content="width=device-width, user-scalable=no">
-    <link href="/public/css/style.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="bar">
-      <div class="left">
-        <strong><a href="/new">New Doodle</a></strong>
-      </div>
-      <div class="right">
-        {{#if user}}
-          Howdy, {{user.username}}!&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/logout">Logout</a></strong>
-        {{else}}
-          <a href="/login">Login</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/register">Register</a></strong>
-        {{/if}}
-      </div>
-      <div class="clearfix"></div>
-    </div>
-    <div class="middle_container">
-      <div class="middle">
-        <img src="/public/img/logo.png" class="logo" alt="Doodles.io" />
-        <div class="container">
-          <div class="dummy"></div>
-          <div class="main">
-            <nav>
-              <select id="color">
-                <option value="black">Black</option>
-                <option value="blue" selected="selected">Blue</option>
-                <option value="red">Red</option>
-                <option value="green">Green</option>
-              </select>
-              <span id="save_text"></span>
-            </nav>
-            <div id="heading">
-              <input type="text" id="title" placeholder="Type your title here..." />
-            </div>
-            <div id="sketch">
-              <canvas id="tools_sketch" class="notepad"></canvas>
-            </div>
-          </div>
+{{!< layout}}
+
+<div class="middle_container">
+  <div class="middle">
+    <img src="/public/img/logo.png" class="logo" alt="Doodles.io" />
+    <div class="container">
+      <div class="dummy"></div>
+      <div class="main">
+        <nav>
+          <select id="color">
+            <option value="black">Black</option>
+            <option value="blue" selected="selected">Blue</option>
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+          </select>
+          <span id="save_text"></span>
+        </nav>
+        <div id="heading">
+          <input type="text" id="title" placeholder="Type your title here..." />
+        </div>
+        <div id="sketch">
+          <canvas id="tools_sketch" class="notepad"></canvas>
         </div>
       </div>
     </div>
-    <script src="/public/js/doodles.js"></script>
-    <script src="/public/js/ajax.js"></script>
-    <script src="/public/js/app.js"></script>
-    <script>var doodle = new Doodle({{#if doodle}}{ title: '{{doodle.title}}', slug: '{{doodle.slug}}', image: '{{doodle.image}}', _id: '{{doodle._id}}' }{{/if}});</script>
-  </body>
-</html>
+  </div>
+</div>
+<script src="/public/js/doodles.js"></script>
+<script src="/public/js/ajax.js"></script>
+<script src="/public/js/app.js"></script>
+<script>var doodle = new Doodle({{#if doodle}}{ title: '{{doodle.title}}', slug: '{{doodle.slug}}', image: '{{doodle.image}}', _id: '{{doodle._id}}' }{{/if}});</script>
