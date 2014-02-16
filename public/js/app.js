@@ -166,7 +166,7 @@ Doodle.prototype = {
   save: function () {
     var image = this.canvasElement.toDataURL();
     if (this.doodle) {
-      doodles.ajax.ajax({
+      doodles.ajax({
         method: 'POST',
         url: '/' + this.doodle.slug,
         data: {
@@ -197,7 +197,7 @@ Doodle.prototype = {
         }
       }.bind(this));
     } else {
-      doodles.ajax.ajax({
+      doodles.ajax({
         method: 'POST',
         url: '/new',
         data: {
