@@ -173,11 +173,23 @@ Doodle.prototype = {
         image: image,
         checksum: sessionStorage.checksum ? sessionStorage.checksum : null
       }).done(function (response) {
+        // Here we need to determine whether or not the server accepted the edit, or if the object that comes back is a fork
+        // This is done by comparing the slugs as they are unique
         if (response.success) {
-          this.messageElement.innerHTML = 'Saved!';
-          this.timer = setTimeout(function () {
-            this.messageElement.innerHTML = '';
-          }.bind(this), 2000);
+          if (typeof response.data === 'undefined') {
+            // Data of a new doodle wasn't passed back, so the edit was accepted
+            this.messageElement.innerHTML = 'Saved!';
+            this.timer = setTimeout(function () {
+              this.messageElement.innerHTML = '';
+            }.bind(this), 2000);
+          } else {
+            sessionStorage.setItem('checksum', response.data.checksum);
+            history.pushState(null, null, '/' + response.data.slug);
+            this.messageElement.innerHTML = 'Forked!';
+            this.timer = setTimeout(function () {
+              this.messageElement.innerHTML = '';
+            }.bind(this), 2000);
+          }
         } else {
           // Need to handle these errors nicely soon
           alert(response.error);
