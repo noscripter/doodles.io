@@ -70,8 +70,6 @@ doodles.ajax = (function () {
   };
   
   // Expose only the ajax function.
-  return {
-    'ajax': ajax
-  }
+  return ajax;
   
 }());
