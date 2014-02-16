@@ -183,13 +183,13 @@ Doodle.prototype = {
             this.messageElement.innerHTML = 'Forked!';
             this.timer = setTimeout(function () {
               this.messageElement.innerHTML = '';
-            }.bind(this), 2000);
+            }.bind(this), 3000);
           } else {
             // Data of a new doodle wasn't passed back, so the edit was accepted
             this.messageElement.innerHTML = 'Saved!';
             this.timer = setTimeout(function () {
               this.messageElement.innerHTML = '';
-            }.bind(this), 2000);
+            }.bind(this), 3000);
           }
         } else {
           // Need to handle these errors nicely soon
@@ -208,7 +208,7 @@ Doodle.prototype = {
           this.messageElement.innerHTML = 'Saved!';
           this.timer = setTimeout(function () {
             this.messageElement.innerHTML = '';
-          }.bind(this), 2000);
+          }.bind(this), 3000);
         } else {
           // Need to handle these errors nicely soon
           alert(response.error);
