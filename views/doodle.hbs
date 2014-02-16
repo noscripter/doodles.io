@@ -7,28 +7,40 @@
   </head>
   <body>
     <div class="bar">
-      <img src="/public/img/logo.png" class="logo" alt="Doodles.io" />
-      {{#if user}}
-      <h1>Howdy, {{user.username}}!</h1>
-      {{/if}}
+      <div class="left">
+        <strong><a href="/new">New Doodle</a></strong>
+      </div>
+      <div class="right">
+        {{#if user}}
+          Howdy, {{user.username}}!&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/logout">Logout</a></strong>
+        {{else}}
+          <a href="/login">Login</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/register">Register</a></strong>
+        {{/if}}
+      </div>
+      <div class="clearfix"></div>
     </div>
-    <div class="container">
-      <div class="dummy"></div>
-      <div class="main">
-        <nav>
-          <select id="color">
-            <option value="black">Black</option>
-            <option value="blue" selected="selected">Blue</option>
-            <option value="red">Red</option>
-            <option value="green">Green</option>
-          </select>
-          <span id="save_text"></span>
-        </nav>
-        <div id="heading">
-          <input type="text" id="title" placeholder="Type your title here..." />
-        </div>
-        <div id="sketch">
-          <canvas id="tools_sketch" class="notepad"></canvas>
+    <div class="middle_container">
+      <div class="middle">
+        <img src="/public/img/logo.png" class="logo" alt="Doodles.io" />
+        <div class="container">
+          <div class="dummy"></div>
+          <div class="main">
+            <nav>
+              <select id="color">
+                <option value="black">Black</option>
+                <option value="blue" selected="selected">Blue</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+              </select>
+              <span id="save_text"></span>
+            </nav>
+            <div id="heading">
+              <input type="text" id="title" placeholder="Type your title here..." />
+            </div>
+            <div id="sketch">
+              <canvas id="tools_sketch" class="notepad"></canvas>
+            </div>
+          </div>
         </div>
       </div>
     </div>
