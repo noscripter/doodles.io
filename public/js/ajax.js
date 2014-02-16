@@ -1,7 +1,7 @@
 /**
  * A miniture library to handle cross-platform ajax requests.
  */
-doodles.ajax = function () {
+doodles.ajax = (function () {
   
   // The various xhr factories used by different browsers.
   var factories = [
@@ -78,7 +78,7 @@ doodles.ajax = function () {
   
   // Expose only the ajax function.
   return {
-    ajax: ajax
+    'ajax': ajax
   }
   
-}
+}());
