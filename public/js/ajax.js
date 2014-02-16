@@ -42,9 +42,16 @@ doodles.ajax = (function () {
     
     xhr.send(options.data ? JSON.stringify(options.data) : null);
     
-    xhr.onreadystatechange = function () {  
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        return callback(xhr.responseText);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4)
+        if (xhr.status === 200) {
+          return callback(xhr.responseText);
+        } else {
+          return callback({
+            success: false,
+            error: 'HTTP error ' + xhr.status
+          })
+        }
       }
     }
   };
