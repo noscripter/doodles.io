@@ -1,3 +1,5 @@
+var doodles = doodles || {};
+
 /**
  * A miniture library to handle cross-platform ajax requests.
  */
