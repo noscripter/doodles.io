@@ -165,16 +165,16 @@ Doodle.prototype = {
 
   save: function () {
     var image = this.canvasElement.toDataURL();
-
-    // Only save a new one if we're not editing an existing doodle.
     if (this.doodle) {
-      $.post('/' + this.doodle.slug, {
-        title: this.titleElement.value,
-        image: image,
-        checksum: sessionStorage.checksum ? sessionStorage.checksum : null
-      }).done(function (response) {
-        // Here we need to determine whether or not the server accepted the edit, or if the object that comes back is a fork
-        // This is done by comparing the slugs as they are unique
+      doodles.ajax({
+        method: 'POST',
+        url: '/' + this.doodle.slug,
+        data: {
+          title: this.titleElement.value,
+          image: image,
+          checksum: sessionStorage.checksum ? sessionStorage.checksum : null
+        }
+      }, function (response) {
         if (response.success) {
           if (response.data) {
             this.doodle = response.data;
@@ -197,10 +197,14 @@ Doodle.prototype = {
         }
       }.bind(this));
     } else {
-      $.post('/new', {
-        title: this.titleElement.value,
-        image: image
-      }).done(function (response) {
+      doodles.ajax({
+        method: 'POST',
+        url: '/new',
+        data: {
+          title: this.titleElement.value,
+          image: image
+        }
+      }, function (response) {
         if (response.success) {
           this.doodle = response.data;
           sessionStorage.setItem('checksum', response.data.checksum);
