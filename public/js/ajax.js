@@ -15,8 +15,6 @@ doodles.ajax = (function () {
    * The AJAX function.
    */
   var ajax = function (options, callback) {
-
-    console.log('yhe');
     
     var method = options.method || 'GET';
     var xhr = createXHRObj();
