@@ -173,28 +173,33 @@ Doodle.prototype = {
         image: image,
         checksum: sessionStorage.checksum ? sessionStorage.checksum : null
       }).done(function (response) {
-        this.messageElement.innerHTML = 'Saved!';
-        this.timer = setTimeout(function () {
-          this.messageElement.innerHTML = '';
-        }.bind(this), 2000);
+        if (response.success) {
+          this.messageElement.innerHTML = 'Saved!';
+          this.timer = setTimeout(function () {
+            this.messageElement.innerHTML = '';
+          }.bind(this), 2000);
+        } else {
+          // Need to handle these errors nicely soon
+          alert(response.error);
+        }
       }.bind(this));
     } else {
       $.post('/new', {
         title: this.titleElement.value,
         image: image
       }).done(function (response) {
-        this.doodle = {
-          title: response.data.title,
-          slug: response.data.slug,
-          image: response.data.image,
-          _id: response.data._id
-        };
-        sessionStorage.setItem('checksum', response.data.checksum);
-        history.pushState(null, null, '/' + response.data.slug);
-        this.messageElement.innerHTML = 'Saved!';
-        this.timer = setTimeout(function () {
-          this.messageElement.innerHTML = '';
-        }.bind(this), 2000);
+        if (response.success) {
+          this.doodle = response.data;
+          sessionStorage.setItem('checksum', response.data.checksum);
+          history.pushState(null, null, '/' + response.data.slug);
+          this.messageElement.innerHTML = 'Saved!';
+          this.timer = setTimeout(function () {
+            this.messageElement.innerHTML = '';
+          }.bind(this), 2000);
+        } else {
+          // Need to handle these errors nicely soon
+          alert(response.error);
+        }
       }.bind(this));
     }
   }
