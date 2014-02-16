@@ -48,20 +48,6 @@ doodles.ajax = (function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         return callback(xhr.responseText);
       }
-      
-      else if (xhr.readyState === 4) {
-        return callback({
-          success: false,
-          error: 'HTTP error ' + xhr.status
-        });
-      }
-      
-      else {
-        return callback({
-          success: false,
-          error: 'Unknown error occured.'
-        });
-      }
     }
   };
   
