@@ -35,7 +35,7 @@
               <span id="save_text"></span>
             </nav>
             <div id="heading">
-              <input type="text" id="title" placeholder="Type your title here..." />
+              <input type="text" id="title" class="placeholder" data-value="Type your title here..." value="Type your title here..." />
             </div>
             <div id="sketch">
               <canvas id="tools_sketch" class="notepad"></canvas>
@@ -44,7 +44,6 @@
         </div>
       </div>
     </div>
-    <script src="/public/js/doodles.js"></script>
     <script src="/public/js/ajax.js"></script>
     <script src="/public/js/app.js"></script>
     <script>var doodle = new Doodle({{#if doodle}}{ title: '{{doodle.title}}', slug: '{{doodle.slug}}', image: '{{doodle.image}}', _id: '{{doodle._id}}' }{{/if}});</script>

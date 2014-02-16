@@ -1,6 +1,7 @@
 function Doodle (doodle) {
   this.titleElement = document.getElementById('title');
   this.titleLength = 0; // Used to prevent shift keys etc. from registering as title changes.
+  this.titlePlaceholder = this.titleElement.dataset.value;
 
   this.canvasElement = document.getElementById('tools_sketch');
   this.sketchElement = document.getElementById('sketch');
@@ -29,7 +30,8 @@ function Doodle (doodle) {
   // Determine if we're creating a new doodle or editing an existing one.
   if (typeof doodle !== 'undefined') {
     this.doodle = doodle;
-    this.titleElement.value = this.doodle.title;
+    this.titleElement.value = this.doodle.title || this.titlePlaceholder;
+    this.titleElement.className = this.titleElement.value === this.titlePlaceholder ? 'placeholder' : '';
     this.titleLength = this.doodle.title.length;
     // Create a new Image object to allow us to draw it to the canvas (from base 64).
     var image = new Image();
@@ -51,7 +53,9 @@ Doodle.prototype = {
     this.onPaintHandler = this.onPaint.bind(this);
 
     // Save the doodle if anything's typed into the title field.
-    this.titleElement.addEventListener('keyup', this.keyupHandler.bind(this), false);
+    this.titleElement.addEventListener('keyup', this.titleKeyupHandler.bind(this), false);
+    this.titleElement.addEventListener('focus', this.titleFocusHandler.bind(this), false);
+    this.titleElement.addEventListener('blur', this.titleBlurHandler.bind(this), false);
     
     // Capture mouse movements.
     this.tempCanvasElement.addEventListener('mousemove', this.mousemoveHandler.bind(this), false);
@@ -149,11 +153,25 @@ Doodle.prototype = {
     this.points = [];
   },
 
-  keyupHandler: function (e) {
+  titleKeyupHandler: function (e) {
     if (e.target.value.length !== this.titleLength) {
       this.messageElement.innerHTML = 'Saving...';
       this.bufferSave();
       this.titleLength = e.target.value.length;
+    }
+  },
+  
+  titleFocusHandler: function (e) {
+    if (this.titleElement.value === this.titlePlaceholder) {
+      this.titleElement.value = '';
+      this.titleElement.className = '';
+    }
+  },
+  
+  titleBlurHandler: function (e) {
+    if (this.titleElement.value === '') {
+      this.titleElement.value = this.titlePlaceholder;
+      this.titleElement.className = 'placeholder';
     }
   },
 
@@ -170,7 +188,7 @@ Doodle.prototype = {
         method: 'POST',
         url: '/' + this.doodle.slug,
         data: {
-          title: this.titleElement.value,
+          title: this.titleElement.value === this.titlePlaceholder ? '' : this.titleElement.value,
           image: image,
           checksum: sessionStorage.checksum ? sessionStorage.checksum : null
         }
@@ -201,7 +219,7 @@ Doodle.prototype = {
         method: 'POST',
         url: '/new',
         data: {
-          title: this.titleElement.value,
+          title: this.titleElement.value === this.titlePlaceholder ? '' : this.titleElement.value,
           image: image
         }
       }, function (response) {
