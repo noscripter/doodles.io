@@ -45,7 +45,7 @@ doodles.ajax = (function () {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          return callback(xhr.responseText);
+          return callback(JSON.parse(xhr.responseText));
         } else {
           return callback({
             success: false,
