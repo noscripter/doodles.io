@@ -43,7 +43,7 @@ doodles.ajax = (function () {
     xhr.send(options.data ? JSON.stringify(options.data) : null);
     
     xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4)
+      if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           return callback(xhr.responseText);
         } else {
@@ -54,7 +54,7 @@ doodles.ajax = (function () {
         }
       }
     }
-  };
+  }
   
   /**
    * Create the xhr to use, depending on the browser.
