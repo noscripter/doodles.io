@@ -8,6 +8,9 @@
   <body>
     <div class="bar">
       <img src="/public/img/logo.png" class="logo" alt="Doodles.io" />
+      {{#if user}}
+      <h1>Howdy, {{user.username}}!</h1>
+      {{/if}}
     </div>
     <div class="container">
       <div class="dummy"></div>
