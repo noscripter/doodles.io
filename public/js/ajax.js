@@ -19,12 +19,18 @@ doodles.ajax = function () {
     var method = options.method || 'GET';
     var xhr = createXHRObj();
     if (!xhr) {
-      return callback('Unable to create XMLHttpRequest Object');
+      return callback({
+        success: false,
+        error: 'Unable to create XMLHttpRequest Object'
+      });
     }
     
     // Error handling for no URL.
     if (!options.url) {
-      return callback('No URL was specified');
+      return callback({
+        success: false,
+        error: 'No URL specified'
+      });
     }
     
     xhr.open(method, options.url, true);
@@ -38,15 +44,21 @@ doodles.ajax = function () {
     
     xhr.onreadystatechange = function () {  
       if (xhr.readyState === 4 && xhr.status === 200) {
-        return callback(null, xhr);
+        return callback(xhr.responseText);
       }
       
       else if (xhr.readyState === 4) {
-        return callback('HTTP error ' + xhr.status);
+        return callback({
+          success: false,
+          error: 'HTTP error ' + xhr.status
+        });
       }
       
       else {
-        return callback('Unknown error occured.');
+        return callback({
+          success: false,
+          error: 'Unknown error occured.'
+        });
       }
     }
   };
