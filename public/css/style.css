@@ -5,6 +5,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  box-sizing: border-box;
 }
 
 /* Clearfix */
@@ -46,6 +47,30 @@ a {
   text-decoration: none;
 }
 
+input {
+  outline: none;
+  font: inherit;
+  border: none;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+input[type=submit] {
+  background-color: #107DC5;
+  background-image: linear-gradient(rgba(255,255,255,0.2), rgba(0, 0, 0, 0.35));
+  color: rgba(255, 255, 255, 0.6);
+}
+
+input[type=submit]:hover {
+  color: #ffffff;
+}
+
+.form input {
+  width: 100%;
+  display: block;
+  margin: 0;
+  padding: 1rem;
+}
+
 .middle_container {
   display: table;
   height: 100%;
@@ -81,9 +106,9 @@ a {
 }
 
 .logo {
-  width: 150px;
+  width: 100px;
   opacity: 0.2;
-  margin: 0 auto 4rem;
+  margin: 1.4rem 0 0;
   display: block;
 }
 
@@ -96,6 +121,14 @@ a {
   border: 1px solid rgba(0,0,0,.5);
   position: relative;
   margin: 0 auto;
+}
+
+#login, #register {
+  max-width: 300px;
+}
+
+#login #id, #register #username, #register #email {
+  border-bottom: 1px solid #dddddd;
 }
 
 .container .dummy {
@@ -121,7 +154,7 @@ nav {
 .container #heading {
   text-align: center;
   height: 50px;
-  background-color: #517391;
+  background-color: #107DC5;
   background-image: linear-gradient(rgba(255,255,255,0.2), rgba(0, 0, 0, 0.35));
   box-shadow: inset 0 1px rgba(255,255,255,.3);
   border-bottom: 1px solid rgba(0,0,0,.5);
@@ -141,7 +174,6 @@ nav {
   background: none;
   font: inherit;
   line-height: 16px;
-  z-index: 999999;
   position: absolute;
   top: 0;
   left: 0;
