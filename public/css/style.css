@@ -55,8 +55,7 @@ input {
 }
 
 input[type=submit] {
-  background-color: #107DC5;
-  background-image: linear-gradient(rgba(255,255,255,0.2), rgba(0, 0, 0, 0.35));
+  background-color: #408fbb;
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -154,8 +153,7 @@ nav {
 .container #heading {
   text-align: center;
   height: 50px;
-  background-color: #107DC5;
-  background-image: linear-gradient(rgba(255,255,255,0.2), rgba(0, 0, 0, 0.35));
+  background-color: #408fbb;
   box-shadow: inset 0 1px rgba(255,255,255,.3);
   border-bottom: 1px solid rgba(0,0,0,.5);
   line-height: 50px;
