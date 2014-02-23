@@ -24,7 +24,7 @@ doodles.login = {
       if (response.success) {
         window.location = '/new';
       } else {
-        alert(response.error);
+        doodles.utils.displayMessage(response.error, 'error');
       }
     }.bind(this));
   }
