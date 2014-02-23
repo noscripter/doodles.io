@@ -116,11 +116,11 @@ input[type=submit]:hover {
   margin: 0 auto;
 }
 
-#login, #register {
+#login_form, #register {
   max-width: 300px;
 }
 
-#login #id, #register #username, #register #email {
+#login_form #id, #register #username, #register #email {
   border-bottom: 1px solid #dddddd;
 }
 

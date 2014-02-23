@@ -1,23 +1,20 @@
-var doodles = doodles || {};
-
-/**
- * A miniture library to handle cross-platform ajax requests.
- */
 doodles.ajax = (function () {
-  
-  // The various xhr factories used by different browsers.
   var factories = [
-    function () { return new XMLHttpRequest() },
-    function () { return new ActiveXObject("Msxml2.XMLHTTP") },
-    function () { return new ActiveXObject("Msxml3.XMLHTTP") },
-    function () { return new ActiveXObject("Microsoft.XMLHTTP") }
+    function () {
+      return new XMLHttpRequest()
+    },
+    function () {
+      return new ActiveXObject("Msxml2.XMLHTTP")
+    },
+    function () {
+      return new ActiveXObject("Msxml3.XMLHTTP")
+    },
+    function () {
+      return new ActiveXObject("Microsoft.XMLHTTP")
+    }
   ];
-  
-  /**
-   * The AJAX function.
-   */
+
   var ajax = function (options, callback) {
-    
     var method = options.method || 'GET';
     var xhr = createXHRObj();
     if (!xhr) {
@@ -52,26 +49,24 @@ doodles.ajax = (function () {
           return callback({
             success: false,
             error: 'HTTP error ' + xhr.status
-          })
+          });
         }
       }
     }
   }
-  
-  /**
-   * Create the xhr to use, depending on the browser.
-   */
+
   var createXHRObj = function () {
     var xhr = false;
     for (var i = 0, l = factories.length; i < l; i++) {
-        try { xhr = factories[i](); }
-        catch (e) { continue; }
+        try {
+          xhr = factories[i]();
+        } catch (e) {
+          continue;
+        }
         break;
     }
     return xhr;
   };
-  
-  // Expose only the ajax function.
+
   return ajax;
-  
 }());
