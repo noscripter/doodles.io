@@ -111,6 +111,9 @@ input[type=submit] {
   border: 1px solid rgba(0,0,0,.5);
   position: relative;
   margin: 0 auto;
+}
+
+.container_doodle {
   padding-top: 50px;
 }
 
