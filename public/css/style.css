@@ -29,7 +29,7 @@ body {
   box-sizing: border-box;
   font: 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  padding: 0;
+  padding: 1rem;
   margin: 0;
   height: 100%;
   width: 100%;
@@ -114,6 +114,7 @@ input[type=submit]:hover {
   border: 1px solid rgba(0,0,0,.5);
   position: relative;
   margin: 0 auto;
+  padding-top: 50px;
 }
 
 #login_form, #register_form {
@@ -260,18 +261,4 @@ nav {
       -ms-transform: translateY(0);
        -o-transform: translateY(0);
           transform: translateY(0);
-}
-
-@media screen and (max-width: 502px) { /* 2px added for borders (I think) */
-  .container {
-    left: 0;
-    margin-left: 0;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .container {
-    border-left: none;
-    border-right: none;
-  }
 }
