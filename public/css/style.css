@@ -235,6 +235,7 @@ nav {
      -moz-transition: -moz-transform 0.2s ease-in-out;
        -o-transition: -o-transform 0.2s ease-in-out;
           transition: transform 0.2s ease-in-out;
+  z-index: 999999;
 }
 
 #message[data-type='info'] {
@@ -242,15 +243,15 @@ nav {
 }
 
 #message[data-type='success'] {
-  background: #76d04b;
+  background: #76bb40;
 }
 
 #message[data-type='warning'] {
-  
+  background: #e0ac24;
 }
 
 #message[data-type='error'] {
-  background: #a70200;
+  background: #bb4040;
 }
 
 #message.open {
