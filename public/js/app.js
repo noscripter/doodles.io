@@ -147,9 +147,6 @@ Doodle.prototype = {
       this.context.drawImage(image, 0, 0);
     }.bind(this);
     
-    // Clear the temporary canvas.
-    this.tempContext.clearRect(0, 0, this.tempCanvasElement.width, this.tempCanvasElement.height);
-    
     this.points = [];
   },
 
