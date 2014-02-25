@@ -38,6 +38,7 @@ body {
 }
 
 a {
+  color: rgba(0, 0, 0, 0.6);
   text-decoration: none;
 }
 
@@ -70,6 +71,7 @@ input[type=submit] {
 .middle {
   display: table-cell;
   vertical-align: middle;
+  text-align: center;
 }
 
 .bar {
@@ -253,6 +255,16 @@ nav {
 
 #message[data-type='error'] {
   background: #bb4040;
+}
+
+.meta {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.meta a {
+  color: rgba(0, 0, 0, 0.4);
 }
 
 #message.open {
