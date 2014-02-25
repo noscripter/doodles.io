@@ -9,4 +9,5 @@ deploy:
   provider: heroku
   app: doodles-io
   on: master
-  api_key: 34468d1a-7e94-4110-bc41-c1666cbb2c62
+  api_key:
+    secure: cmjGoZqcxCPPO/Ho6Y75rxgbGaQGWGx64VC/4pxNKF5VVQsMH0JlWgm4FX52oZoDCW7wbbMDP9Dm6/RAk5Az1nqqP8fGeSiLGnNWnIK2v1FrdiFd6VhqUbCYCOL0URje9Ynd40nWs56qhXTnLh3dnGpju6uqglsdx0PT1rqRo4o=
