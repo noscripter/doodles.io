@@ -3,5 +3,22 @@
 <div class="main">
   {{#each doodles}}
   <img src="{{image}}" alt="{{title}}" width="200" height="200" />
+  {{slug}}
   {{/each}}
 </div>
+
+<script>
+function hello () {
+  doodles.ajax({
+    method: 'DELETE',
+    url: '/TUP0uK',
+  }, function (response) {
+    console.log('success', response.success);
+    if (response.success) {
+      // Delete element.
+    } else {
+      doodles.utils.displayMessage(response.error, 'error');
+    }
+  });
+}
+</script>
