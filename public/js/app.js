@@ -180,54 +180,59 @@ Doodle.prototype = {
 
   save: function () {
     var image = this.canvasElement.toDataURL();
+    var options = {
+      method: 'POST',
+      data: {
+        title: this.titleElement.value === this.titlePlaceholder ? '' : this.titleElement.value,
+        image: image
+      }
+    };
+
     if (this.doodle) {
-      doodles.ajax({
-        method: 'POST',
-        url: '/' + this.doodle.slug,
-        data: {
-          title: this.titleElement.value === this.titlePlaceholder ? '' : this.titleElement.value,
-          image: image,
-          checksum: sessionStorage.checksum ? sessionStorage.checksum : null
-        }
-      }, function (response) {
-        if (response.success) {
-          if (response.data) {
-            this.doodle = response.data;
-            sessionStorage.setItem('checksum', response.data.checksum);
-            history.pushState(null, null, '/' + response.data.slug);
-            doodles.utils.displayMessage('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'info', 6);
-          } else {
-            // Data of a new doodle wasn't passed back, so the edit was accepted
-            this.messageElement.innerHTML = 'Saved!';
-            this.timer = setTimeout(function () {
-              this.messageElement.innerHTML = '';
-            }.bind(this), 3000);
-          }
-        } else {
-          doodles.utils.displayMessage(response.error, 'error');
-        }
-      }.bind(this));
+      options.url = '/' + this.doodle.slug;
+      options.data.checksum = sessionStorage.checksum ? sessionStorage.checksum : null;
+      options.parent = this.doodle.slug;
+      this.update(options);
     } else {
-      doodles.ajax({
-        method: 'POST',
-        url: '/new',
-        data: {
-          title: this.titleElement.value === this.titlePlaceholder ? '' : this.titleElement.value,
-          image: image
-        }
-      }, function (response) {
-        if (response.success) {
+      options.url = '/new';
+      this.create(options);
+    }
+  },
+
+  update: function (options) {
+    doodles.ajax(options, function (response) {
+      if (response.success) {
+        if (response.data) {
           this.doodle = response.data;
           sessionStorage.setItem('checksum', response.data.checksum);
           history.pushState(null, null, '/' + response.data.slug);
+          doodles.utils.displayMessage('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'info', 6);
+        } else {
+          // Data of a new doodle wasn't passed back, so the edit was accepted
           this.messageElement.innerHTML = 'Saved!';
           this.timer = setTimeout(function () {
             this.messageElement.innerHTML = '';
           }.bind(this), 3000);
-        } else {
-          doodles.utils.displayMessage(response.error, 'error');
         }
-      }.bind(this));
-    }
+      } else {
+        doodles.utils.displayMessage(response.error, 'error');
+      }
+    }.bind(this));
+  },
+
+  create: function (options) {
+    doodles.ajax(options, function (response) {
+      if (response.success) {
+        this.doodle = response.data;
+        sessionStorage.setItem('checksum', response.data.checksum);
+        history.pushState(null, null, '/' + response.data.slug);
+        this.messageElement.innerHTML = 'Saved!';
+        this.timer = setTimeout(function () {
+          this.messageElement.innerHTML = '';
+        }.bind(this), 3000);
+      } else {
+        doodles.utils.displayMessage(response.error, 'error');
+      }
+    }.bind(this));
   }
 };
