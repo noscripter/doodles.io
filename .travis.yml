@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- '0.10'
+before_script:
+- npm install
+notifications:
+  email: true
+deploy:
+  provider: heroku
+  app: doodles-io
+  on: master
+  api_key: 34468d1a-7e94-4110-bc41-c1666cbb2c62
