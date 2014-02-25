@@ -191,7 +191,7 @@ Doodle.prototype = {
     if (this.doodle) {
       options.url = '/' + this.doodle.slug;
       options.data.checksum = sessionStorage.checksum ? sessionStorage.checksum : null;
-      options.parent = this.doodle.slug;
+      options.data.parent = this.doodle.slug;
       this.update(options);
     } else {
       options.url = '/new';
