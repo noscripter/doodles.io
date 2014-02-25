@@ -2,6 +2,8 @@
 
 Doodles.io is a free service that allows you to send quick doodles to friends, colleagues or clients.
 
+[![Build Status](https://travis-ci.org/dcgauld/doodles.io.png?branch=master)](https://travis-ci.org/dcgauld/doodles.io)
+
 ## Why use Doodles.io?
 
 In many situations, we've often found it difficult to explain a certain design, shape or layout through words alone. Although there are plenty of solutions to this, we tried to find a place where we could create and share a doodle within seconds. It didn't exist, so we created Doodles.io.
