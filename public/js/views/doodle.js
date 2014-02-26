@@ -41,6 +41,7 @@ function Doodle (doodle) {
     this.titleLength = this.doodle.title.length;
     // Create a new Image object to allow us to draw it to the canvas (from base 64).
     var image = new Image();
+    image.crossOrigin = 'anonymous';
     image.src = this.doodle.image;
     image.addEventListener('load', function () {
       this.context.drawImage(image, 0, 0, 1000, 1000);
