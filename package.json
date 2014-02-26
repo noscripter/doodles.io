@@ -30,7 +30,8 @@
     "bcrypt": "0.7.x",
     "express-hbs": "0.5.x",
     "xtend": "2.1.x",
-    "validator": "~3.2.1"
+    "validator": "~3.2.1",
+    "knox": "~0.8.9"
   },
   "devDependencies": {
     "nodemon": "0.7.x"
