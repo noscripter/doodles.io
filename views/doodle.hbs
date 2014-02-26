@@ -30,5 +30,14 @@
   </div>
 </div>
 <script>
-  var doodle = new Doodle({{#if doodle}}{ title: '{{doodle.title}}', slug: '{{doodle.slug}}', image: '{{doodle.image}}', _id: '{{doodle._id}}' }{{/if}});
+  {{#if doodle}}
+    var doodle = {
+      title: '{{doodle.title}}',
+      slug: '{{doodle.slug}}',
+      image: '{{doodle.image}}',
+      _id: '{{doodle._id}}'
+    }
+  {{else}}
+    var doodle = null;
+  {{/if}}
 </script>
