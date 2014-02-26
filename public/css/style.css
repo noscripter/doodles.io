@@ -28,7 +28,6 @@ body {
   min-height: 100%;
   box-sizing: border-box;
   font: 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
   padding: 1rem;
   margin: 0;
   height: 100%;
