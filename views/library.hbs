@@ -6,19 +6,3 @@
   {{slug}}
   {{/each}}
 </div>
-
-<script>
-function hello (slug) {
-  doodles.ajax({
-    method: 'DELETE',
-    url: '/' + slug,
-  }, function (response) {
-    console.log('success', response.success);
-    if (response.success) {
-      // Delete element.
-    } else {
-      doodles.utils.displayMessage(response.error, 'error');
-    }
-  });
-}
-</script>
