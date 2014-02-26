@@ -8,10 +8,10 @@
 </div>
 
 <script>
-function hello () {
+function hello (slug) {
   doodles.ajax({
     method: 'DELETE',
-    url: '/TUP0uK',
+    url: '/' + slug,
   }, function (response) {
     console.log('success', response.success);
     if (response.success) {
