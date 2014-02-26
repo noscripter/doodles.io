@@ -213,7 +213,7 @@ Doodle.prototype = {
           this.doodle = response.data;
           sessionStorage.setItem('checksum', response.data.checksum);
           history.pushState(null, null, '/' + response.data.slug);
-          doodles.utils.displayMessage('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'info', 6);
+          doodles.utils.message('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'info', 6);
         } else {
           // Data of a new doodle wasn't passed back, so the edit was accepted
           this.messageElement.innerHTML = 'Saved!';
@@ -222,7 +222,7 @@ Doodle.prototype = {
           }.bind(this), 3000);
         }
       } else {
-        doodles.utils.displayMessage(response.error, 'error');
+        doodles.utils.message(response.error, 'error');
       }
     }.bind(this));
   },
@@ -238,7 +238,7 @@ Doodle.prototype = {
           this.messageElement.innerHTML = '';
         }.bind(this), 3000);
       } else {
-        doodles.utils.displayMessage(response.error, 'error');
+        doodles.utils.message(response.error, 'error');
       }
     }.bind(this));
   }

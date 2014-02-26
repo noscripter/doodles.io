@@ -26,7 +26,7 @@ doodles.register = {
       if (response.success) {
         window.location = '/new';
       } else {
-        doodles.utils.displayMessage(response.error, 'error');
+        doodles.utils.message(response.error, 'error');
       }
     }.bind(this));
   }
