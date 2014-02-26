@@ -13,7 +13,7 @@ doodles.login = {
     var id = document.getElementById('id').value;
     var password = document.getElementById('password').value;
     
-    doodles.ajax({
+    doodles.utils.ajax({
       method: 'POST',
       url: '/login',
       data: {
@@ -30,3 +30,5 @@ doodles.login = {
   }
 
 }
+
+window.addEventListener('load', doodles.login.init);

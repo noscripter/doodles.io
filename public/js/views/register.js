@@ -14,7 +14,7 @@ doodles.register = {
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
     
-    doodles.ajax({
+    doodles.utils.ajax({
       method: 'POST',
       url: '/register',
       data: {
@@ -32,3 +32,5 @@ doodles.register = {
   }
 
 }
+
+window.addEventListener('load', doodles.register.init);
