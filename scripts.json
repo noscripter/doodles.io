@@ -6,7 +6,6 @@
     "/public/js/views/doodle.js",
     "/public/js/views/login.js",
     "/public/js/views/register.js",
-    "/public/js/views/scrapbook.js",
-    "/public/js/app.js"
+    "/public/js/views/scrapbook.js"
   ]
 }
