@@ -1,25 +1,50 @@
-doodles.scrapbook = {
+var Scrapbook = (function () {
 
-  init: function () {
-    console.log('here');
-    var removeButtons = document.getElementsByClassName('remove-btn');
-    if (removeButtons) {
-      for (var i = 0, l = removeButtons.length; i < l; i++) {
-        this.addEvent(removeButtons[i]);
+  var element;
+
+  return {
+
+    init: function () {
+      element = document.getElementById('scrapbook');
+      this.bindEvents();
+    },
+
+    bindEvents: function () {
+      var buttons = document.getElementsByClassName('remove');
+      for (var i = 0, l = buttons.length; i < l; i++) {
+        this.addEventToElement(buttons[i]);
       }
+    },
+
+    addEventToElement: function (elem) {
+      var parent = elem.parentNode;
+      elem.addEventListener('click', function () {
+        this.removeDoodle(parent.dataset.slug, function () {
+          parent.parentNode.removeChild(parent);
+        })
+      }.bind(this), false);
+    },
+
+    removeDoodle: function (slug, callback) {
+      console.log('hrere');
+      doodles.utils.ajax({
+        url: '/' + slug,
+        method: 'DELETE',
+        data: {
+          slug: slug
+        }
+      }, function (res) {
+        if (!res.success) {
+          // WHAT! Give user the error!
+        }
+        return callback();
+      });
     }
-  },
 
-  addEvent: function (button) {
-    button.addEventListener('click', function () {
-      doodles.scrapbook.remove(button.dataset.slug)
-    }, false);
-  },
-
-  remove: function (slug) {
-    console.log('remove ', slug);
   }
 
-};
+}());
 
-window.addEventListener('load', doodles.scrapbook.init.bind(doodles.scrapbook));
+if (document.getElementById('scrapbook')) {
+  window.addEventListener('load', Scrapbook.init.bind(Scrapbook), false);
+}
