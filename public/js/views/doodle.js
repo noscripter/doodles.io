@@ -55,15 +55,15 @@ var Doodle = (function () {
       onPaintHandler;
 
       // Check to see if we're editing or creating a doodle.
-      if (doodle) {
+      if (typeof doodle !== 'undefined') {
         titleElement.value = doodle.title || titlePlaceholder;
         titleElement.className = titleElement.value === titlePlaceholder ? 'placeholder' : '';
         titleLength = doodle.title.length;
 
         // Create a new Image object to allow us to draw the image to the canvas.
         var image = new Image();
-        image.crossOrigin = 'anonymous';
-        image.src = doodle.image;
+        image.crossOrigin = '';
+        image.src = doodle.image + '?id=' + Date.now();
         image.addEventListener('load', function () {
           context.drawImage(image, 0, 0, 1000, 1000);
         });

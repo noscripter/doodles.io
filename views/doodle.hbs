@@ -22,22 +22,20 @@
         </div>
       </div>
     </div>
+    {{#if doodle.parent}}
     <div class="meta">
-      {{#if doodle.parent}}
-        <strong><a href="/{{doodle.parent}}">View original doodle &rarr;</a></strong>
-      {{/if}}
+      <strong><a href="/{{doodle.parent}}">View original doodle &rarr;</a></strong>
     </div>
+    {{/if}}
   </div>
 </div>
+{{#if doodle}}
 <script>
-  {{#if doodle}}
-    var doodle = {
-      title: '{{doodle.title}}',
-      slug: '{{doodle.slug}}',
-      image: '{{doodle.image}}',
-      _id: '{{doodle._id}}'
-    }
-  {{else}}
-    var doodle = null;
-  {{/if}}
+  var doodle = {
+    _id: '{{doodle._id}}',
+    title: '{{doodle.title}}',
+    slug: '{{doodle.slug}}',
+    image: '{{doodle.image}}'
+  }
 </script>
+{{/if}}
