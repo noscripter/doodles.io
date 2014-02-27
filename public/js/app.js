@@ -1,5 +1,13 @@
-doodles.app = function () {
-  FastClick.attach(document.body);
-}
+var App = (function () {
 
-window.addEventListener('load', doodles.app);
+  return {
+
+    init: function () {
+      FastClick.attach(document.body);
+    }
+
+  };
+
+})();
+
+window.addEventListener('load', App.init.bind(App));

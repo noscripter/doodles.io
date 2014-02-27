@@ -1,244 +1,266 @@
-function init () {
-  if (document.getElementById('sketch')) {
-    new Doodle(doodle);
-  }
-}
+var Doodle = (function () {
 
-function Doodle (doodle) {
-  this.titleElement = document.getElementById('title');
-  this.titleLength = 0; // Used to prevent shift keys etc. from registering as title changes.
-  this.titlePlaceholder = this.titleElement.dataset.value;
+  var titleLength;
+  var titleElement;
+  var titlePlaceholder;
 
-  this.canvasElement = document.getElementById('tools_sketch');
-  this.sketchElement = document.getElementById('sketch');
-  this.tempCanvasElement = document.createElement('canvas');
-  this.messageElement = document.getElementById('save_text');
-  this.colorElement = document.getElementById('color');
+  var canvasElement;
+  var tempCanvasElement;
+  var sketchElement;
+  var messageElement;
+  var colorElement;
 
-  this.canvasElement.width = 1000; // For retina.
-  this.canvasElement.height = 1000; // For retina.
+  var context;
+  var tempContext;
 
-  // Add temporary canvas attributes and add it to the page.
-  this.tempCanvasElement.id = 'tmp_canvas';
-  this.tempCanvasElement.width = this.canvasElement.width;
-  this.tempCanvasElement.height = this.canvasElement.height;
-  this.sketchElement.appendChild(this.tempCanvasElement);
+  var mouse;
+  var mouseStart;
+  var points;
 
-  this.context = this.canvasElement.getContext('2d');
-  this.tempContext = this.tempCanvasElement.getContext('2d');
+  var timer;
 
-  this.mouse = { x: 0, y: 0 };
-  this.mouseStart = { x: 0, y: 0 };
-  this.points = [];
+  var onPaintHandler;
 
-  this.timer = null; // Used to buffer a save. Prevents a shit loads of requests per second.
+  return {
 
-  // Determine if we're creating a new doodle or editing an existing one.
-  if (doodle) {
-    this.doodle = doodle;
-    this.titleElement.value = this.doodle.title || this.titlePlaceholder;
-    this.titleElement.className = this.titleElement.value === this.titlePlaceholder ? 'placeholder' : '';
-    this.titleLength = this.doodle.title.length;
-    // Create a new Image object to allow us to draw it to the canvas (from base 64).
-    var image = new Image();
-    image.crossOrigin = 'anonymous';
-    image.src = this.doodle.image;
-    image.addEventListener('load', function () {
-      this.context.drawImage(image, 0, 0, 1000, 1000);
-    }.bind(this));
-    this.initEvents();
-  } else {
-    this.initEvents();
-  }
-}
+    init: function () {
+      titleElement = document.getElementById('title');
+      titleLength = 0;
+      titlePlaceholder = titleElement.dataset.value;
 
-Doodle.prototype = {
-  initEvents: function () {
-    // onPaint is stored as a reference as binding creates a new function
-    // each time, and we need to have a reference to onPaint to be able to
-    // remove it from an event listener later on.
-    this.onPaintHandler = this.onPaint.bind(this);
+      canvasElement = document.getElementById('tools_sketch');
+      sketchElement = document.getElementById('sketch');
+      tempCanvasElement = document.createElement('canvas');
+      messageElement = document.getElementById('save_text');
+      colorElement = document.getElementById('color');
 
-    // Save the doodle if anything's typed into the title field.
-    this.titleElement.addEventListener('keyup', this.titleKeyupHandler.bind(this), false);
-    this.titleElement.addEventListener('focus', this.titleFocusHandler.bind(this), false);
-    this.titleElement.addEventListener('blur', this.titleBlurHandler.bind(this), false);
-    
-    // Capture mouse movements.
-    this.tempCanvasElement.addEventListener('mousemove', this.mousemoveHandler.bind(this), false);
-    this.tempCanvasElement.addEventListener('touchmove', this.mousemoveHandler.bind(this), false);
-    
-    // Draw it bitches.
-    this.tempCanvasElement.addEventListener('mousedown', this.mousedownHandler.bind(this), false);
-    this.tempCanvasElement.addEventListener('touchstart', this.mousedownHandler.bind(this), false);
-    
-    // Stop drawing, you. Stop it now!
-    this.tempCanvasElement.addEventListener('mouseup', this.mouseupHandler.bind(this), false);
-    this.tempCanvasElement.addEventListener('touchend', this.mouseupHandler.bind(this), false);
-  },
-  
-  onPaint: function () {
-    // Add current point to points array.
-    this.points.push({
-      x: this.mouse.x * 2,
-      y: this.mouse.y * 2
-    });
-    
-    // Sets up options for drawing such as line width, stroke color etc.
-    if (this.points.length < 3) {
-      var b = this.points[0];
-      this.tempContext.lineWidth = 4; // Actual size is 2 but retina means it's doubled.
-      this.tempContext.lineJoin = 'round';
-      this.tempContext.lineCap = 'round';
-      this.tempContext.strokeStyle = this.colorElement.value;
-      this.tempContext.fillStyle = this.colorElement.value;
-      this.tempContext.beginPath();
-      this.tempContext.arc(b.x, b.y, this.tempContext.lineWidth / 2, 0, Math.PI * 2, !0);
-      this.tempContext.fill();
-      this.tempContext.closePath();
-      return;
-    }
-    
-    // Clear the temporary canvas before drawing.
-    this.tempContext.clearRect(0, 0, this.tempCanvasElement.width, this.tempCanvasElement.height);
-    
-    // Draw it up.
-    this.tempContext.beginPath();
-    this.tempContext.moveTo(this.points[0].x, this.points[0].y);
-    
-    // Smooth it out.
-    for (var i = 1; i < this.points.length - 2; i++) {
-      var c = (this.points[i].x + this.points[i + 1].x) / 2;
-      var d = (this.points[i].y + this.points[i + 1].y) / 2;
-      this.tempContext.quadraticCurveTo(this.points[i].x, this.points[i].y, c, d);
-    }
+      canvasElement.width = 1000;
+      canvasElement.height = 1000;
 
-    this.tempContext.quadraticCurveTo(this.points[i].x, this.points[i].y, this.points[i + 1].x, this.points[i + 1].y);
-    this.tempContext.stroke();
-  },
-  
-  mousemoveHandler: function (e) {
-    e.preventDefault();
-    var xPos = 500 / (this.canvasElement.offsetWidth);
-    var yPos = 500 / (this.canvasElement.offsetHeight);
-    this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX * xPos : e.layerX * xPos;
-    this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY * yPos : e.layerY * yPos;
-  },
-  
-  mousedownHandler: function (e) {
-    e.preventDefault();
-    var xPos = 500 / (this.canvasElement.offsetWidth);
-    var yPos = 500 / (this.canvasElement.offsetHeight);
-    this.mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX * xPos : e.layerX * xPos;
-    this.mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY * yPos : e.layerY * yPos;
-    this.mouseStart.x = this.mouse.x * 2;
-    this.mouseStart.y = this.mouse.y * 2;
-    this.tempCanvasElement.addEventListener('mousemove', this.onPaintHandler, false);
-    this.tempCanvasElement.addEventListener('touchmove', this.onPaintHandler, false);
-    this.onPaint();
-  },
-  
-  mouseupHandler: function () {
-    this.messageElement.innerHTML = 'Saving...';
+      tempCanvasElement.id = 'tmp_canvas';
+      tempCanvasElement.width = canvasElement.width;
+      tempCanvasElement.height = canvasElement.height;
+      sketchElement.appendChild(tempCanvasElement);
 
-    // Save as soon as the drawing has stopped.
-    this.bufferSave();
+      context = canvasElement.getContext('2d');
+      tempContext = tempCanvasElement.getContext('2d');
 
-    this.tempCanvasElement.removeEventListener('mousemove', this.onPaintHandler, false);
-    this.tempCanvasElement.removeEventListener('touchmove', this.onPaintHandler, false);
-    
-    // Write down to the real canvas.
-    var image = new Image();
-    image.src = this.tempCanvasElement.toDataURL();
-    image.onload = function () {
-      this.context.drawImage(image, 0, 0);
-    }.bind(this);
-    
-    this.points = [];
-  },
+      mouse = { x: 0, y: 0 };
+      mouseStart = { x: 0, y: 0 };
+      points = [];
 
-  titleKeyupHandler: function (e) {
-    if (e.target.value.length !== this.titleLength) {
-      this.messageElement.innerHTML = 'Saving...';
-      this.bufferSave();
-      this.titleLength = e.target.value.length;
-    }
-  },
-  
-  titleFocusHandler: function (e) {
-    if (this.titleElement.value === this.titlePlaceholder) {
-      this.titleElement.value = '';
-      this.titleElement.className = '';
-    }
-  },
-  
-  titleBlurHandler: function (e) {
-    if (this.titleElement.value === '') {
-      this.titleElement.value = this.titlePlaceholder;
-      this.titleElement.className = 'placeholder';
-    }
-  },
+      timer = null;
 
-  // Prevents saving every time a change is made. Only make them (at most) every 1 second.
-  bufferSave: function () {
-    clearTimeout(this.timer);
-    this.timer = setTimeout(this.save.bind(this), 1000);
-  },
+      // Holds a reference to a bound function.
+      onPaintHandler;
 
-  save: function () {
-    var image = this.canvasElement.toDataURL();
-    var options = {
-      method: 'POST',
-      data: {
-        title: this.titleElement.value === this.titlePlaceholder ? '' : this.titleElement.value,
-        image: image
+      // Check to see if we're editing or creating a doodle.
+      if (doodle) {
+        titleElement.value = doodle.title || titlePlaceholder;
+        titleElement.className = titleElement.value === titlePlaceholder ? 'placeholder' : '';
+        titleLength = doodle.title.length;
+
+        // Create a new Image object to allow us to draw the image to the canvas.
+        var image = new Image();
+        image.crossOrigin = 'anonymous';
+        image.src = doodle.image;
+        image.addEventListener('load', function () {
+          context.drawImage(image, 0, 0, 1000, 1000);
+        });
+        this.bindEvents();
+      } else {
+        this.bindEvents();
       }
-    };
+    },
 
-    if (this.doodle) {
-      options.url = '/' + this.doodle.slug;
-      options.data.checksum = sessionStorage.checksum ? sessionStorage.checksum : null;
-      options.data.parent = this.doodle.slug;
-      this.update(options);
-    } else {
-      options.url = '/new';
-      this.create(options);
-    }
-  },
+    bindEvents: function () {
+      onPaintHandler = this.onPaint.bind(this);
 
-  update: function (options) {
-    doodles.utils.ajax(options, function (response) {
-      if (response.success) {
-        if (response.data) {
-          this.doodle = response.data;
+      // Save the doodle if anything's typed into the title field.
+      titleElement.addEventListener('keyup', this.titleKeyupHandler.bind(this), false);
+      titleElement.addEventListener('focus', this.titleFocusHandler.bind(this), false);
+      titleElement.addEventListener('blur', this.titleBlurHandler.bind(this), false);
+
+      // Capture mouse movements.
+      tempCanvasElement.addEventListener('mousemove', this.mousemoveHandler.bind(this), false);
+      tempCanvasElement.addEventListener('touchmove', this.mousemoveHandler.bind(this), false);
+
+      // Draw it bitches.
+      tempCanvasElement.addEventListener('mousedown', this.mousedownHandler.bind(this), false);
+      tempCanvasElement.addEventListener('touchstart', this.mousedownHandler.bind(this), false);
+
+      // Stop drawing.
+      tempCanvasElement.addEventListener('mouseup', this.mouseupHandler.bind(this), false);
+      tempCanvasElement.addEventListener('touchend', this.mouseupHandler.bind(this), false);
+    },
+
+    onPaint: function () {
+      points.push({
+        x: mouse.x * 2,
+        y: mouse.y * 2
+      });
+
+      // Setup options for drawing (line width, stroke color etc.).
+      if (points.length < 3) {
+        var b = points[0];
+        tempContext.lineWidth = 4;
+        tempContext.lineJoin = 'round';
+        tempContext.lineCap = 'round';
+        tempContext.strokeStyle = colorElement.value;
+        tempContext.fillStyle = colorElement.value;
+        tempContext.beginPath();
+        tempContext.arc(b.x, b.y, tempContext.lineWidth / 2, 0, Math.PI * 2, !0);
+        tempContext.fill();
+        tempContext.closePath();
+        return;
+      }
+
+      tempContext.clearRect(0, 0, tempCanvasElement.width, tempCanvasElement.height);
+      tempContext.beginPath();
+      tempContext.moveTo(points[0].x, points[0].y);
+
+      for (var i = 1; i < points.length - 2; i++) {
+        var c = (points[i].x + points[i + 1].x) / 2;
+        var d = (points[i].y + points[i + 1].y) / 2;
+        tempContext.quadraticCurveTo(points[i].x, points[i].y, c, d);
+      }
+
+      tempContext.quadraticCurveTo(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+      tempContext.stroke();
+    },
+
+    mousemoveHandler: function (e) {
+      e.preventDefault();
+
+      var xPos = 500 / canvasElement.offsetWidth;
+      var yPos = 500 / canvasElement.offsetHeight;
+
+      mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX * xPos : e.layerX * xPos;
+      mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY * yPos : e.layerY * yPos;
+    },
+
+    mousedownHandler: function (e) {
+      e.preventDefault();
+
+      var xPos = 500 / canvasElement.offsetWidth;
+      var yPos = 500 / canvasElement.offsetHeight;
+
+      mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX * xPos : e.layerX * xPos;
+      mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY * yPos : e.layerY * yPos;
+
+      mouseStart.x = mouse.x * 2;
+      mouseStart.y = mouse.y * 2;
+
+      tempCanvasElement.addEventListener('mousemove', onPaintHandler, false);
+      tempCanvasElement.addEventListener('touchmove', onPaintHandler, false);
+
+      this.onPaint();
+    },
+
+    mouseupHandler: function () {
+      messageElement.innerHTML = 'Saving...';
+
+      // Save as soon as the drawing has stopped.
+      this.bufferSave();
+
+      tempCanvasElement.removeEventListener('mousemove', onPaintHandler, false);
+      tempCanvasElement.removeEventListener('touchmove', onPaintHandler, false);
+
+      // Write down to the real canvas.
+      var image = new Image();
+      image.src = tempCanvasElement.toDataURL();
+      image.onload = function () {
+        context.drawImage(image, 0, 0);
+      }
+
+      points = [];
+    },
+
+    titleKeyupHandler: function (e) {
+      if (e.target.value.length !== titleLength) {
+        messageElement.innerHTML = 'Saving...';
+        this.bufferSave();
+        titleLength = e.target.value.length;
+      }
+    },
+
+    titleFocusHandler: function (e) {
+      if (titleElement.value === titlePlaceholder) {
+        titleElement.value = '';
+        titleElement.className = '';
+      }
+    },
+
+    titleBlurHandler: function (e) {
+      if (titleElement.value === '') {
+        titleElement.value = titlePlaceholder;
+        titleElement.className = 'placeholder';
+      }
+    },
+
+    bufferSave: function () {
+      clearTimeout(timer);
+      timer = setTimeout(this.save.bind(this), 1000);
+    },
+
+    save: function () {
+      var image = canvasElement.toDataURL();
+      var options = {
+        method: 'POST',
+        data: {
+          title: titleElement.value === titlePlaceholder ? '' : titleElement.value,
+          image: image
+        }
+      };
+
+      if (doodle) {
+        options.url = '/' + doodle.slug;
+        options.data.checksum = sessionStorage.checksum ? sessionStorage.checksum : null;
+        options.data.parent = doodle.slug;
+        this.update(options);
+      } else {
+        options.url = '/new';
+        this.create(options);
+      }
+    },
+
+    update: function (options) {
+      Utils.ajax(options, function (response) {
+        if (response.success) {
+          if (response.data) {
+            doodle = response.data;
+            sessionStorage.setItem('checksum', response.data.checksum);
+            history.pushState(null, null, '/' + response.data.slug);
+            Utils.message('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'success', 6);
+          } else {
+            // Data of a new doodle wasn't passed back, so the edit was accepted.
+            Utils.message('Doodle updated successfully.', 'success');
+            messageElement.innerHTML = '';
+          }
+        } else {
+          Utils.message(response.error, 'error');
+        }
+      });
+    },
+
+    create: function (options) {
+      Utils.ajax(options, function (response) {
+        if (response.success) {
+          doodle = response.data;
           sessionStorage.setItem('checksum', response.data.checksum);
           history.pushState(null, null, '/' + response.data.slug);
-          doodles.utils.message('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'success', 6);
+          Utils.message('Doodle created successfully.', 'success');
+          messageElement.innerHTML = '';
         } else {
-          // Data of a new doodle wasn't passed back, so the edit was accepted
-          this.messageElement.innerHTML = 'Saved!';
-          this.timer = setTimeout(function () {
-            this.messageElement.innerHTML = '';
-          }.bind(this), 3000);
+          Utils.message(response.error, 'error');
         }
-      } else {
-        doodles.utils.message(response.error, 'error');
-      }
-    }.bind(this));
-  },
+      });
+    }
 
-  create: function (options) {
-    doodles.utils.ajax(options, function (response) {
-      if (response.success) {
-        this.doodle = response.data;
-        sessionStorage.setItem('checksum', response.data.checksum);
-        history.pushState(null, null, '/' + response.data.slug);
-        doodles.utils.message('Doodle saved successfully.', 'success');
-      } else {
-        doodles.utils.message(response.error, 'error');
-      }
-    }.bind(this));
-  }
-};
+  };
 
-window.addEventListener('load', init);
+})();
+
+if (document.getElementById('sketch')) {
+  window.addEventListener('load', Doodle.init.bind(Doodle));
+}

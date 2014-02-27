@@ -1,36 +1,47 @@
-doodles.register = {
+var Register = (function () {
 
-  init: function () {
-    var registerForm = document.getElementById('register_form');
-    if (registerForm) {
-      registerForm.addEventListener('submit', doodles.register.submit);
+  var registerForm;
+
+  return {
+
+    init: function () {
+      registerForm = document.getElementById('register_form');
+
+      this.bindEvents();
+    },
+
+    bindEvents: function () {
+      registerForm.addEventListener('submit', this.submit.bind(this), false);
+    },
+
+    submit: function (e) {
+      e.preventDefault();
+
+      var username = document.getElementById('username').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+
+      Utils.ajax({
+        method: 'POST',
+        url: '/register',
+        data: {
+          username: username,
+          email: email,
+          password: password
+        }
+      }, function (response) {
+        if (response.success) {
+          window.location = '/new';
+        } else {
+          Utils.message(response.error, 'error');
+        }
+      }.bind(this));
     }
-  },
 
-  submit: function (e) {
-    e.preventDefault();
+  };
 
-    var username = document.getElementById('username').value;
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
-    
-    doodles.utils.ajax({
-      method: 'POST',
-      url: '/register',
-      data: {
-        username: username,
-        email: email,
-        password: password
-      }
-    }, function (response) {
-      if (response.success) {
-        window.location = '/new';
-      } else {
-        doodles.utils.message(response.error, 'error');
-      }
-    }.bind(this));
-  }
+})();
 
+if (document.getElementById('register_form')) {
+  window.addEventListener('load', Register.init.bind(Register));
 }
-
-window.addEventListener('load', doodles.register.init);

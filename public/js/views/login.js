@@ -1,34 +1,45 @@
-doodles.login = {
+var Login = (function () {
 
-  init: function () {
-    var loginForm = document.getElementById('login_form');
-    if (loginForm) {
-      loginForm.addEventListener('submit', doodles.login.submit);
+  var loginForm;
+
+  return {
+
+    init: function () {
+      loginForm = document.getElementById('login_form');
+
+      this.bindEvents();
+    },
+
+    bindEvents: function () {
+      loginForm.addEventListener('submit', this.submit.bind(this), false);
+    },
+
+    submit: function (e) {
+      e.preventDefault();
+
+      var id = document.getElementById('id').value;
+      var password = document.getElementById('password').value;
+
+      Utils.ajax({
+        method: 'POST',
+        url: '/login',
+        data: {
+          id: id,
+          password: password
+        }
+      }, function (response) {
+        if (response.success) {
+          window.location = '/new';
+        } else {
+          Utils.message(response.error, 'error');
+        }
+      }.bind(this));
     }
-  },
 
-  submit: function (e) {
-    e.preventDefault();
+  };
 
-    var id = document.getElementById('id').value;
-    var password = document.getElementById('password').value;
-    
-    doodles.utils.ajax({
-      method: 'POST',
-      url: '/login',
-      data: {
-        id: id,
-        password: password
-      }
-    }, function (response) {
-      if (response.success) {
-        window.location = '/new';
-      } else {
-        doodles.utils.message(response.error, 'error');
-      }
-    }.bind(this));
-  }
+})();
 
+if (document.getElementById('login_form')) {
+  window.addEventListener('load', Login.init.bind(Login));
 }
-
-window.addEventListener('load', doodles.login.init);
