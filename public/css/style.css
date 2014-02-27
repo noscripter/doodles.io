@@ -96,6 +96,24 @@ input[type=submit] {
   float: right;
 }
 
+.right .menu {
+  margin: 0.5em 0 0 0;
+}
+
+.right .menu:hover {
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.arrow-down {
+  display: inline-block;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid rgba(0, 0, 0, 0.5);
+	width: 0; height: 0;
+  margin: 0 0 0.2em 0.5em;
+}
+
 .logo {
   width: 100px;
   opacity: 0.2;
@@ -233,7 +251,7 @@ nav {
       -ms-transform: translateY(-3rem);
        -o-transform: translateY(-3rem);
           transform: translateY(-3rem);
-  -webkit-transition: -webkit-transform 0.2s ease-in-out; 
+  -webkit-transition: -webkit-transform 0.2s ease-in-out;
      -moz-transition: -moz-transform 0.2s ease-in-out;
        -o-transition: -o-transform 0.2s ease-in-out;
           transition: transform 0.2s ease-in-out;
