@@ -1,10 +1,16 @@
 {{!< layout}}
 
-<div class="main">
-  {{#each doodles}}
-  <a href="/{{slug}}">
-    <img src="{{image}}" alt="{{title}}" width="200" height="200" />
-  </a>
-  <input type="button" class="remove-btn" data-slug="{{slug}}" value="remove" />
-  {{/each}}
+<div id="scrapbook">
+  <ul>
+    {{#each doodles}}
+    <li data-slug={{slug}}>
+      <a href="/{{slug}}">
+        <img src="{{image}}" alt="{{title}}" width="200" height="200" />
+      </a>
+      {{#if ../userIsOwner}}
+        <input type="button" class="remove" value="remove" />
+      {{/if}}
+    </li>
+    {{/each}}
+  </ul>
 </div>
