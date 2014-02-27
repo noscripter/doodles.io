@@ -1,47 +1,39 @@
 var Scrapbook = (function () {
 
-  var element;
+  var deleteButtons;
 
   return {
 
     init: function () {
-      element = document.getElementById('scrapbook');
+      deleteButtons = document.getElementsByClassName('delete_button');
+
       this.bindEvents();
     },
 
     bindEvents: function () {
-      var buttons = document.getElementsByClassName('remove');
-      for (var i = 0, l = buttons.length; i < l; i++) {
-        this.addEventToElement(buttons[i]);
+      for (var i = 0, l = deleteButtons.length; i < l; i++) {
+        deleteButtons[i].addEventListener('click', this.deleteClickHandler.bind(this), false);
       }
     },
 
-    addEventToElement: function (elem) {
-      var parent = elem.parentNode;
-      elem.addEventListener('click', function () {
-        this.removeDoodle(parent.dataset.slug, function () {
-          parent.parentNode.removeChild(parent);
-        })
-      }.bind(this), false);
-    },
-
-    removeDoodle: function (slug, callback) {
-      console.log('hrere');
-      doodles.utils.ajax({
-        url: '/' + slug,
+    deleteClickHandler: function (e) {
+      Utils.ajax({
+        url: '/' + e.target.parentNode.dataset.slug,
         method: 'DELETE',
         data: {
-          slug: slug
+          slug: e.target.parentNode.dataset.slug
         }
       }, function (res) {
         if (!res.success) {
-          // WHAT! Give user the error!
+          Utils.message(res.error, 'error');
+        } else {
+          e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+          Utils.message('Doodle deleted successfully.', 'success');
         }
-        return callback();
       });
     }
 
-  }
+  };
 
 }());
 
