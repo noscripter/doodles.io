@@ -6,6 +6,62 @@
       <div class="dummy"></div>
       <div class="main">
         <nav>
+          <style>
+
+
+
+
+.user2 {
+  position: relative;
+  background: rgba(255, 255, 255, 0.2);
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+}
+
+.user2:hover {
+  background: #10699B;
+}
+
+.user2:hover ul {
+  visibility: visible;
+}
+
+.user2 ul {
+  visibility: hidden;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 7rem;
+  background-color: #10699B;
+}
+
+.user2 ul li a {
+  display: block;
+  padding: 0.6rem 1.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.user2 ul li:last-child a {
+  border: none;
+}
+
+
+
+
+</style>
+<div class="user2">
+      <ul>
+        <li><a href="#">Black</a></li>
+        <li><a href="#">Blue</a></li>
+        <li><a href="#">Red</a></li>
+        <li><a href="#">Green</a></li>
+      </ul>
+    </div>
           <select id="color">
             <option value="black">Black</option>
             <option value="blue" selected="selected">Blue</option>
