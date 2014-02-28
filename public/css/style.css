@@ -26,7 +26,6 @@ html {
 body {
   background: #eee9e2;
   min-height: 100%;
-  box-sizing: border-box;
   font: 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding: 1rem;
   margin: 0;
