@@ -6,7 +6,7 @@ var Doodle = (function () {
 
   var canvasElement;
   var tempCanvasElement;
-  var sketchElement;
+  var imageElement;
   var messageElement;
   var colorElement;
 
@@ -24,15 +24,15 @@ var Doodle = (function () {
   return {
 
     init: function () {
-      titleElement = document.getElementById('title');
+      titleElement = document.getElementById('doodle_title');
       titleLength = 0;
       titlePlaceholder = titleElement.dataset.value;
 
-      canvasElement = document.getElementById('tools_sketch');
-      sketchElement = document.getElementById('sketch');
+      canvasElement = document.getElementById('doodle_canvas');
+      imageElement = document.getElementById('doodle_image');
       tempCanvasElement = document.createElement('canvas');
       messageElement = document.getElementById('save_text');
-      colorElement = document.getElementById('color');
+      colorElement = document.getElementById('doodle_color');
 
       canvasElement.width = 1000;
       canvasElement.height = 1000;
@@ -40,7 +40,7 @@ var Doodle = (function () {
       tempCanvasElement.id = 'tmp_canvas';
       tempCanvasElement.width = canvasElement.width;
       tempCanvasElement.height = canvasElement.height;
-      sketchElement.appendChild(tempCanvasElement);
+      imageElement.appendChild(tempCanvasElement);
 
       context = canvasElement.getContext('2d');
       tempContext = tempCanvasElement.getContext('2d');
@@ -55,15 +55,15 @@ var Doodle = (function () {
       onPaintHandler;
 
       // Check to see if we're editing or creating a doodle.
-      if (typeof doodle !== 'undefined') {
-        titleElement.value = doodle.title || titlePlaceholder;
+      if (typeof currentDoodle !== 'undefined') {
+        titleElement.value = currentDoodle.title || titlePlaceholder;
         titleElement.className = titleElement.value === titlePlaceholder ? 'placeholder' : '';
-        titleLength = doodle.title.length;
+        titleLength = currentDoodle.title.length;
 
         // Create a new Image object to allow us to draw the image to the canvas.
         var image = new Image();
-        image.crossOrigin = '';
-        image.src = doodle.image + '?id=' + Date.now();
+        image.crossOrigin = 'anonymous';
+        image.src = currentDoodle.image;
         image.addEventListener('load', function () {
           context.drawImage(image, 0, 0, 1000, 1000);
         });
@@ -213,10 +213,10 @@ var Doodle = (function () {
         }
       };
 
-      if (doodle) {
-        options.url = '/' + doodle.slug;
+      if (typeof currentDoodle !== 'undefined') {
+        options.url = '/' + currentDoodle.slug;
         options.data.checksum = sessionStorage.checksum ? sessionStorage.checksum : null;
-        options.data.parent = doodle.slug;
+        options.data.parent = currentDoodle.slug;
         this.update(options);
       } else {
         options.url = '/new';
@@ -228,7 +228,7 @@ var Doodle = (function () {
       Utils.ajax(options, function (response) {
         if (response.success) {
           if (response.data) {
-            doodle = response.data;
+            currentDoodle = response.data;
             sessionStorage.setItem('checksum', response.data.checksum);
             history.pushState(null, null, '/' + response.data.slug);
             Utils.message('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'success', 6);
@@ -246,7 +246,7 @@ var Doodle = (function () {
     create: function (options) {
       Utils.ajax(options, function (response) {
         if (response.success) {
-          doodle = response.data;
+          currentDoodle = response.data;
           sessionStorage.setItem('checksum', response.data.checksum);
           history.pushState(null, null, '/' + response.data.slug);
           Utils.message('Doodle created successfully.', 'success');
@@ -261,6 +261,6 @@ var Doodle = (function () {
 
 })();
 
-if (document.getElementById('sketch')) {
+if (document.getElementById('doodle')) {
   window.addEventListener('load', Doodle.init.bind(Doodle));
 }

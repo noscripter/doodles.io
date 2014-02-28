@@ -1,6 +1,7 @@
 {
   "app": [
     "/public/js/vendor/fastclick.min.js",
+    "/public/js/vendor/less.min.js",
     "/public/js/app.js",
     "/public/js/utils.js",
     "/public/js/views/doodle.js",

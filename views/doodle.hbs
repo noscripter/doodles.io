@@ -1,11 +1,10 @@
 {{!< layout}}
-
-<div class="middle_container">
-  <div class="middle">
-    <div class="container container_doodle">
-      <div class="dummy"></div>
-      <div class="main">
-        <nav>
+<div class="vertical_layout">
+  <div class="vertical_cell">
+    <div id="doodle" class="container">
+      <div class="doodle_ratio_push"></div>
+      <div class="doodle_ratio">
+        <div class="doodle_heading">
           <style>
 
 
@@ -62,24 +61,22 @@
         <li><a href="#">Green</a></li>
       </ul>
     </div>
-          <select id="color">
+          <input type="text" id="doodle_title" class="placeholder" data-value="Type your title here..." value="Type your title here..." />
+          <select id="doodle_color">
             <option value="black">Black</option>
             <option value="blue" selected="selected">Blue</option>
             <option value="red">Red</option>
             <option value="green">Green</option>
           </select>
           <span id="save_text"></span>
-        </nav>
-        <div id="heading">
-          <input type="text" id="title" class="placeholder" data-value="Type your title here..." value="Type your title here..." />
         </div>
-        <div id="sketch">
-          <canvas id="tools_sketch" class="notepad"></canvas>
+        <div id="doodle_image">
+          <canvas id="doodle_canvas"></canvas>
         </div>
       </div>
     </div>
     {{#if doodle.parent}}
-    <div class="meta">
+    <div class="doodle_meta">
       <strong><a href="/{{doodle.parent}}">View original doodle &rarr;</a></strong>
     </div>
     {{/if}}
@@ -87,7 +84,7 @@
 </div>
 {{#if doodle}}
 <script>
-  var doodle = {
+  var currentDoodle = {
     _id: '{{doodle._id}}',
     title: '{{doodle.title}}',
     slug: '{{doodle.slug}}',

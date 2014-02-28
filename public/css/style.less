@@ -1,0 +1,294 @@
+/* Variables. */
+@background-color: #eee9e2;
+@link-color: rgba(0, 0, 0, 0.6);
+@nice-blue: #408fbb;
+
+/* Y translation parametric mixin. */
+.translateY(@degrees : 0) {
+  -webkit-transform: translateY(@degrees);
+     -moz-transform: translateY(@degrees);
+      -ms-transform: translateY(@degrees);
+       -o-transform: translateY(@degrees);
+          transform: translateY(@degrees);
+}
+
+/* Transition parametric mixin. */
+.transition(@seconds) {
+  -webkit-transition: -webkit-transform @seconds ease-in-out;
+     -moz-transition: -moz-transform @seconds ease-in-out;
+       -o-transition: -o-transform @seconds ease-in-out;
+          transition: transform @seconds ease-in-out;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Clearfix */
+
+.clearfix {
+
+  &:before, &:after {
+    content: " ";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+
+  *zoom: 1;
+}
+
+/* Global Style */
+
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: @background-color;
+  min-height: 100%;
+  font: 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  line-height: 100%;
+}
+
+a {
+  color: @link-color;
+  text-decoration: none;
+}
+
+input {
+  outline: none;
+  font: inherit;
+  border: none;
+  color: @link-color;
+  border-radius: 0;
+
+  &[type=submit] {
+    background-color: @nice-blue;
+    color: #ffffff;
+  }
+}
+
+.form input {
+  width: 100%;
+  display: block;
+  margin: 0;
+  padding: 1rem 1rem 0.8rem;
+}
+
+/* Main wrappers. */
+
+.vertical_layout {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.vertical_cell {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+/* Header. */
+
+.bar {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  line-height: 4rem;
+  padding: 0 1.3rem;
+  color: @link-color;
+
+  a {
+    color: @link-color;
+  }
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.arrow-down {
+  display: inline-block;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid rgba(0, 0, 0, 0.5);
+  width: 0; height: 0;
+  margin: 0 0 0.2em 0.5em;
+}
+
+.logo {
+  width: 80px;
+  opacity: 0.2;
+  margin: 1.1rem 0 0;
+  display: block;
+}
+
+.container {
+  box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 500px;
+  max-height: 550px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  position: relative;
+  margin: 0 auto;
+}
+
+#login_form, #register_form {
+  max-width: 300px;
+}
+
+#login_form #id, #register_form #username, #register_form #email {
+  border-bottom: 1px solid #dddddd;
+}
+
+/* Doodle style */
+
+#doodle {
+
+  .doodle_ratio_push {
+    margin-top: 100%;
+  }
+
+  /* Maintains 1:1 aspect ratio */
+  .doodle_ratio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  .doodle_heading {
+    text-align: center;
+    height: 50px;
+    background-color: @nice-blue;
+    box-shadow: inset 0 1px rgba(255,255,255,.3);
+    border-bottom: 1px solid rgba(0,0,0,.5);
+    line-height: 50px;
+    margin: 0;
+    position: relative;
+
+    input {
+      font-size: 16px;
+      text-align: center;
+      width: 100%;
+      height: 50px;
+      color: rgba(255, 255, 255, 1);
+      border: none;
+      outline: none;
+      background: none;
+      font: inherit;
+      line-height: 16px;
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      .placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      bottom: 4px;
+      left: 0;
+      border-bottom: 1px dashed rgba(255,255,255,.4);
+    }
+  }
+
+  #doodle_canvas {
+    font: inherit;
+    font-size: .75em;
+    color: rgba(0,0,0,.7);
+    margin: 0;
+    display: block;
+    box-sizing: border-box;
+    border-radius: 0 0 5px 5px;
+    border-top: 0;
+    resize: vertical;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(0deg, transparent, transparent 24px, #f0c9ca 24px, #f0c9ca 25px, transparent 25px, transparent 27px, #f0c9ca 27px, #f0c9ca 28px, transparent 28px), linear-gradient(#fff, #fff 17px, #e3ebf3 17px, #e3ebf3 18px);
+    background-size: 36px 18px, 36px 18px;
+    background-repeat: repeat-y, repeat;
+  }
+}
+
+#tmp_canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  cursor: crosshair;
+}
+
+#message {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 3rem;
+  line-height: 3rem;
+  color: #ffffff;
+  display: block;
+  text-align: center;
+
+  .translateY(-3rem);
+  .transition(0.2s);
+
+  z-index: 999999;
+
+  &[data-type='info'] {
+    background: @nice-blue;
+  }
+
+  &[data-type='success'] {
+    background: #76bb40;
+  }
+
+  &[data-type='warning'] {
+    background: #e0ac24;
+  }
+
+  &[data-type='error'] {
+    background: #bb4040;
+  }
+
+  .open {
+    .translateY(0)
+  }
+}
+
+.doodle_meta {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.4);
+
+  a {
+    color: rgba(0, 0, 0, 0.4);
+  }
+}
