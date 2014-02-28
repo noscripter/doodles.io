@@ -54,7 +54,7 @@ var Doodle = (function () {
       // Holds a reference to a bound function.
       onPaintHandler;
 
-      // Check to see if we're editing or creating a currentDoodle.
+      // Check to see if we're editing or creating a doodle.
       if (typeof currentDoodle !== 'undefined') {
         titleElement.value = currentDoodle.title || titlePlaceholder;
         titleElement.className = titleElement.value === titlePlaceholder ? 'placeholder' : '';
