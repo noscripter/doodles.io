@@ -86,7 +86,7 @@ input {
 
 .bar {
   position: absolute;
-  background: rgba(255, 255, 255, 0.8);
+  background: #fcf8f4;
   top: 0;
   left: 0;
   right: 0;
@@ -94,6 +94,7 @@ input {
   line-height: 4rem;
   padding: 0 1.3rem;
   color: @link-color;
+  z-index: 99999;
 
   a {
     color: @link-color;
@@ -240,6 +241,7 @@ input {
   width: 100%;
   top: 0;
   left: 0;
+  margin-top: 4rem;
   height: 3rem;
   line-height: 3rem;
   color: #ffffff;
@@ -257,7 +259,7 @@ input {
        -o-transition: -o-transform 0.2s ease-in-out;
           transition: transform 0.2s ease-in-out;
 
-  z-index: 999999;
+  z-index: 9999;
 
   &[data-type='info'] {
     background: @nice-blue;
