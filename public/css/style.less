@@ -147,6 +147,8 @@ input {
 
 #doodle {
 
+  padding-bottom: 50px;
+
   .doodle_ratio_push {
     margin-top: 100%;
   }
@@ -185,7 +187,7 @@ input {
       top: 0;
       left: 0;
 
-      .placeholder {
+      &.placeholder {
         color: rgba(255, 255, 255, 0.6);
       }
     }
@@ -198,6 +200,10 @@ input {
       left: 0;
       border-bottom: 1px dashed rgba(255,255,255,.4);
     }
+  }
+
+  #doodle_image {
+    position: relative;
   }
 
   #doodle_canvas {
