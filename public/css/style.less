@@ -158,6 +158,55 @@ header {
   }
 }
 
+/* Message */
+
+#message {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  margin-top: 4rem;
+  height: 3rem;
+  line-height: 3rem;
+  color: #ffffff;
+  display: block;
+  text-align: center;
+  z-index: 9999;
+  -webkit-transform: translateY(-3rem);
+     -moz-transform: translateY(-3rem);
+      -ms-transform: translateY(-3rem);
+       -o-transform: translateY(-3rem);
+          transform: translateY(-3rem);
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+     -moz-transition: -moz-transform 0.3s ease-in-out;
+       -o-transition: -o-transform 0.3s ease-in-out;
+          transition: transform 0.3s ease-in-out;
+
+  &[data-type='info'] {
+    background: @nice-blue;
+  }
+
+  &[data-type='success'] {
+    background: #76bb40;
+  }
+
+  &[data-type='warning'] {
+    background: #e0ac24;
+  }
+
+  &[data-type='error'] {
+    background: #bb4040;
+  }
+
+  &.open {
+    -webkit-transform: translateY(0);
+       -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+         -o-transform: translateY(0);
+            transform: translateY(0);
+  }
+}
+
 /* Doodle */
 
 #doodle {
@@ -310,54 +359,5 @@ header {
 
   a {
     color: rgba(0, 0, 0, 0.4);
-  }
-}
-
-/* Message */
-
-#message {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-  margin-top: 4rem;
-  height: 3rem;
-  line-height: 3rem;
-  color: #ffffff;
-  display: block;
-  text-align: center;
-  z-index: 9999;
-  -webkit-transform: translateY(-3rem);
-     -moz-transform: translateY(-3rem);
-      -ms-transform: translateY(-3rem);
-       -o-transform: translateY(-3rem);
-          transform: translateY(-3rem);
-  -webkit-transition: -webkit-transform 0.3s ease-in-out;
-     -moz-transition: -moz-transform 0.3s ease-in-out;
-       -o-transition: -o-transform 0.3s ease-in-out;
-          transition: transform 0.3s ease-in-out;
-
-  &[data-type='info'] {
-    background: @nice-blue;
-  }
-
-  &[data-type='success'] {
-    background: #76bb40;
-  }
-
-  &[data-type='warning'] {
-    background: #e0ac24;
-  }
-
-  &[data-type='error'] {
-    background: #bb4040;
-  }
-
-  &.open {
-    -webkit-transform: translateY(0);
-       -moz-transform: translateY(0);
-        -ms-transform: translateY(0);
-         -o-transform: translateY(0);
-            transform: translateY(0);
   }
 }
