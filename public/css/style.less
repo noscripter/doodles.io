@@ -3,6 +3,7 @@
 @background-color: #eee9e2;
 @link-color: rgba(0, 0, 0, 0.6);
 @nice-blue: #408fbb;
+@nice-green: #76bb40;
 
 /* Clearfix */
 
@@ -186,7 +187,7 @@ header {
   }
 
   &[data-type='success'] {
-    background: #76bb40;
+    background: @nice-green;
   }
 
   &[data-type='warning'] {
@@ -222,7 +223,7 @@ header {
     font-size: 1rem;
     min-width: 20%;
 
-    &:first-child .doodle_image {
+    .doodle_new {
       background: none !important;
     }
 
@@ -264,6 +265,49 @@ header {
           img {
             width: 100%;
             height: 100%;
+          }
+
+          .fork {
+            position: absolute;
+            font-size: 1.3rem;
+            right: 1.7rem;
+            bottom: 0;
+            padding: 0 0.5rem 0.5rem;
+            color: rgba(0, 0, 0, 0.2);
+          }
+
+          .trash {
+            position: absolute;
+            font-size: 1.3rem;
+            right: 0;
+            bottom: 0;
+            padding: 0 0.5rem 0.5rem;
+            color: rgba(0, 0, 0, 0.2);
+
+            &:hover {
+              color: rgba(0, 0, 0, 1);
+              cursor: pointer;
+            }
+          }
+        }
+
+        .doodle_new a {
+          background: rgba(255, 255, 255, 0.4);
+          color: rgba(0, 0, 0, 0.2);
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: rgba(0, 0, 0, 0.5);
+          }
+
+          .plus {
+            position: absolute;
+            margin: 0;
+            top: 50%;
+            left: 50%;
+            font-size: 5rem;
+            margin-top: -2rem;
+            margin-left: -2rem;
           }
         }
       }
