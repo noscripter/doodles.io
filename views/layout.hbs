@@ -13,12 +13,12 @@
         <a href="/"><img src="/public/img/logo.png" class="logo" alt="Doodles.io" /></a>
       </div>
       <div class="right">
-        {{#if user}}
-          Howdy, {{user.username}}!&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/logout">Logout</a></strong>
-          <img src="{{user.gravatar}}" alt="" />
-        {{else}}
-          <a href="/login">Login</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/register">Register</a></strong>
-        {{/if}}
+      {{#if user}}
+        Howdy, {{user.username}}!&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/logout">Logout</a></strong>
+        <img class="avatar" src="{{user.gravatar}}" alt="" />
+      {{else}}
+        <a href="/login">Login</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/register">Register</a></strong>
+      {{/if}}
       </div>
       <div class="clearfix"></div>
     </div>
