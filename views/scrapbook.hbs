@@ -1,15 +1,18 @@
 {{!< layout}}
-<div id="scrapbook">
-  <ul>
-    {{#each doodles}}
-    <li data-slug={{slug}}>
-      <a href="/{{slug}}">
-        <img src="{{image}}" alt="{{title}}" width="200" height="200" />
-      </a>
-      {{#if ../userIsOwner}}
-        <input type="button" class="delete_button" value="Delete" />
-      {{/if}}
-    </li>
-    {{/each}}
-  </ul>
-</div>
+<ul id="scrapbook">
+  {{#each doodles}}
+  <li data-slug={{slug}}>
+    <div class="doodle_scrapbook">
+      <div class="doodle_ratio_push"></div>
+      <div class="doodle_ratio">
+        <div class="doodle_image">
+          <a href="/{{slug}}"><img src="{{image}}" alt="{{title}}" /></a>
+        </div>
+      </div>
+    </div>
+    {{#if ../userIsOwner}}
+      <input type="button" class="delete_button" value="Delete" />
+    {{/if}}
+  </li>
+  {{/each}}
+</ul>

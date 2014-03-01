@@ -28,7 +28,6 @@
 html {
   height: 100%;
   width: 100%;
-  overflow: hidden;
 }
 
 body {
@@ -36,10 +35,10 @@ body {
   min-height: 100%;
   font: 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0;
-  padding: 6rem 1rem 1rem;
+  padding: 6rem 2rem 2rem;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   line-height: 100%;
 }
 
@@ -155,6 +154,61 @@ header {
 
   #id, #username, #email {
     border-bottom: 1px solid #dddddd;
+  }
+}
+
+/* Scrapbook */
+
+#scrapbook {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  margin-right: -2rem;
+
+  li {
+    display: inline-block;
+    margin: 0;
+    padding: 0 2rem 2rem 0;
+    font-size: 1rem;
+    min-width: 20%;
+
+    .doodle_scrapbook {
+      box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 500px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      position: relative;
+      margin: 0 auto;
+
+      .doodle_ratio_push {
+        margin-top: 100%;
+      }
+
+      .doodle_ratio {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+
+        .doodle_image {
+          resize: vertical;
+          width: 100%;
+          height: 100%;
+          background: url('../img/lines.png');
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          position: relative;
+
+          a img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
   }
 }
 
