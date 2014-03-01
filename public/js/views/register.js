@@ -5,7 +5,7 @@ var Register = (function () {
   return {
 
     init: function () {
-      registerForm = document.getElementById('register_form');
+      registerForm = document.getElementById('register');
 
       this.bindEvents();
     },
@@ -42,6 +42,6 @@ var Register = (function () {
 
 })();
 
-if (document.getElementById('register_form')) {
+if (document.getElementById('register')) {
   window.addEventListener('load', Register.init.bind(Register));
 }

@@ -5,7 +5,7 @@ var Login = (function () {
   return {
 
     init: function () {
-      loginForm = document.getElementById('login_form');
+      loginForm = document.getElementById('login');
 
       this.bindEvents();
     },
@@ -40,6 +40,6 @@ var Login = (function () {
 
 })();
 
-if (document.getElementById('login_form')) {
+if (document.getElementById('login')) {
   window.addEventListener('load', Login.init.bind(Login));
 }
