@@ -1,6 +1,6 @@
 var Utils = (function () {
 
-  var timeout;
+  var messageTimer;
 
   return {
 
@@ -12,7 +12,7 @@ var Utils = (function () {
 
       if (messageElement.className == 'open') {
         messageElement.className = '';
-        clearTimeout(timeout);
+        clearTimeout(messageTimer);
         timeoutDelay = 200;
       }
 
@@ -20,7 +20,7 @@ var Utils = (function () {
         messageElement.innerHTML = message;
         messageElement.dataset.type = type;
         messageElement.className = 'open';
-        timeout = setTimeout(function () {
+        messageTimer = setTimeout(function () {
           messageElement.className = '';
         }, delay * 1000);
       }, timeoutDelay);
@@ -50,11 +50,15 @@ var Utils = (function () {
           error: 'An unknown error occurred. Please try again.'
         });
       }
+
       xhr.open(method, options.url, true);
+
       if (method === 'POST') {
         xhr.setRequestHeader('Content-type', 'application/json');
       }
+
       xhr.send(options.data ? JSON.stringify(options.data) : null);
+
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
@@ -67,6 +71,7 @@ var Utils = (function () {
           }
         }
       }
+
       function createXHRObject() {
         var xhr = null;
         for (var i = 0, l = factories.length; i < l; i++) {

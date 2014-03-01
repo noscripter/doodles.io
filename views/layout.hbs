@@ -8,11 +8,11 @@
   </head>
   <body>
     <div id="message"></div>
-    <div class="bar">
-      <div class="left">
-        <a href="/"><img src="/public/img/logo.png" class="logo" alt="Doodles.io" /></a>
+    <header>
+      <div class="header_left">
+        <a href="/"><img src="/public/img/logo.png" class="header_logo" alt="Doodles.io" /></a>
       </div>
-      <div class="right">
+      <div class="header_right">
       {{#if user}}
         Howdy, {{user.username}}!&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/logout">Logout</a></strong>
         <img class="avatar" src="{{user.gravatar}}" alt="" />
@@ -21,7 +21,7 @@
       {{/if}}
       </div>
       <div class="clearfix"></div>
-    </div>
+    </header>
     {{{body}}}
     {{#scripts}}<script src="{{.}}"></script>{{/scripts}}
   </body>

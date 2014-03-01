@@ -41,7 +41,7 @@ var Doodle = (function () {
       canvasElement.width = 1000;
       canvasElement.height = 1000;
 
-      tempCanvasElement.id = 'tmp_canvas';
+      tempCanvasElement.id = 'doodle_canvas_temp';
       tempCanvasElement.width = canvasElement.width;
       tempCanvasElement.height = canvasElement.height;
       imageElement.appendChild(tempCanvasElement);
@@ -209,7 +209,7 @@ var Doodle = (function () {
 
     colorElementClickHandler: function (e) {
       e.preventDefault();
-      color = e.target.dataset.color_name.toLowerCase();
+      color = e.target.dataset.color;
     },
 
     bufferSave: function () {
