@@ -36,7 +36,7 @@ var Doodle = (function () {
       messageElement = document.getElementById('save_text');
 
       colorElements = document.getElementsByClassName('color_element');
-      color = 'blue';
+      color = 'black';
 
       canvasElement.width = 1000;
       canvasElement.height = 1000;
@@ -63,13 +63,15 @@ var Doodle = (function () {
         titleElement.value = currentDoodle.title || titlePlaceholder;
         titleElement.className = titleElement.value === titlePlaceholder ? 'placeholder' : '';
         titleLength = currentDoodle.title.length;
+        imageElement.className += ' loader';
 
         // Create a new Image object to allow us to draw the image to the canvas.
         var image = new Image();
         image.crossOrigin = 'anonymous';
-        image.src = currentDoodle.image;
+        image.src = currentDoodle.image + '?c=' + Date.now();
         image.addEventListener('load', function () {
           context.drawImage(image, 0, 0, 1000, 1000);
+          imageElement.className = imageElement.className.replace(/\bloader\b/,'');
         });
         this.bindEvents();
       } else {
