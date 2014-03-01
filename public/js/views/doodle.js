@@ -8,7 +8,9 @@ var Doodle = (function () {
   var tempCanvasElement;
   var imageElement;
   var messageElement;
-  var colorElement;
+
+  var colorElements;
+  var color;
 
   var context;
   var tempContext;
@@ -32,7 +34,9 @@ var Doodle = (function () {
       imageElement = document.getElementById('doodle_image');
       tempCanvasElement = document.createElement('canvas');
       messageElement = document.getElementById('save_text');
-      colorElement = document.getElementById('doodle_color');
+
+      colorElements = document.getElementsByClassName('color_element');
+      color = 'blue';
 
       canvasElement.width = 1000;
       canvasElement.height = 1000;
@@ -92,6 +96,11 @@ var Doodle = (function () {
       // Stop drawing.
       tempCanvasElement.addEventListener('mouseup', this.mouseupHandler.bind(this), false);
       tempCanvasElement.addEventListener('touchend', this.mouseupHandler.bind(this), false);
+
+      // Add event listeners for each colour selectable.
+      for (var i = 0; i < colorElements.length; i++) {
+        colorElements[i].addEventListener('click', this.colorElementClickHandler.bind(this), false);
+      }
     },
 
     onPaint: function () {
@@ -106,8 +115,8 @@ var Doodle = (function () {
         tempContext.lineWidth = 4;
         tempContext.lineJoin = 'round';
         tempContext.lineCap = 'round';
-        tempContext.strokeStyle = colorElement.value;
-        tempContext.fillStyle = colorElement.value;
+        tempContext.strokeStyle = color;
+        tempContext.fillStyle = color;
         tempContext.beginPath();
         tempContext.arc(b.x, b.y, tempContext.lineWidth / 2, 0, Math.PI * 2, !0);
         tempContext.fill();
@@ -196,6 +205,11 @@ var Doodle = (function () {
         titleElement.value = titlePlaceholder;
         titleElement.className = 'placeholder';
       }
+    },
+
+    colorElementClickHandler: function (e) {
+      e.preventDefault();
+      color = e.target.dataset.color_name.toLowerCase();
     },
 
     bufferSave: function () {
