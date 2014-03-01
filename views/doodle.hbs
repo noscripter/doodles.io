@@ -75,6 +75,14 @@
         </div>
       </div>
     </div>
+    {{#if doodle}}
+    <div class="doodle_meta">
+      <img src="{{doodle.avatar}}" alt="" />
+      <span class="author">
+        <a href="/user/{{doodle.authorString}}">{{doodle.authorString}}</a>
+      </span>
+    </div>
+    {{/if}}
     {{#if doodle.parent}}
     <div class="doodle_meta">
       <strong><a href="/{{doodle.parent}}">View original doodle &rarr;</a></strong>
