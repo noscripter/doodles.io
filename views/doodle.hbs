@@ -24,11 +24,13 @@
     </div>
     {{#if doodle}}
     <div class="doodle_meta">
+      {{#if doodle._user}}
       <img class="avatar doodle_avatar" src="{{doodle.avatar}}" alt="" />
       <span class="doodle_author">
         <span class="doodle_verb">Doodle {{doodle.authorString}} by...</span>
         <a href="/user/{{doodle._user.username}}">@{{doodle._user.username}}</a>
       </span>
+      {{/if}}
       {{#if doodle.parent}}
       <strong><a href="/{{doodle.parent}}">View original doodle &rarr;</a></strong>
       {{/if}}
