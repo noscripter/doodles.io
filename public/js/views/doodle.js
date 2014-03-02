@@ -8,6 +8,7 @@ var Doodle = (function () {
   var tempCanvasElement;
   var imageElement;
   var messageElement;
+  var headingElement;
 
   var colorElement;
   var colorElements;
@@ -35,6 +36,7 @@ var Doodle = (function () {
       imageElement = document.getElementById('doodle_image');
       tempCanvasElement = document.createElement('canvas');
       messageElement = document.getElementById('save_text');
+      headingElement = document.getElementById('doodle_heading');
 
       colorElement = document.getElementById('doodle_color');
       colorElements = document.getElementsByClassName('color_element');
@@ -171,8 +173,6 @@ var Doodle = (function () {
     },
 
     mouseupHandler: function () {
-      messageElement.innerHTML = 'Saving...';
-
       // Save as soon as the drawing has stopped.
       this.bufferSave();
 
@@ -191,7 +191,6 @@ var Doodle = (function () {
 
     titleKeyupHandler: function (e) {
       if (e.target.value.length !== titleLength) {
-        messageElement.innerHTML = 'Saving...';
         this.bufferSave();
         titleLength = e.target.value.length;
       }
@@ -218,6 +217,7 @@ var Doodle = (function () {
     },
 
     bufferSave: function () {
+      headingElement.className = 'heading_loader';
       clearTimeout(timer);
       timer = setTimeout(this.save.bind(this), 1000);
     },
@@ -255,8 +255,7 @@ var Doodle = (function () {
             Utils.message('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'success', 6);
           } else {
             // Data of a new doodle wasn't passed back, so the edit was accepted.
-            Utils.message('Doodle updated successfully.', 'success');
-            messageElement.innerHTML = '';
+            headingElement.className = ''; // Remove loader (quiet update).
           }
         } else {
           Utils.message(response.error, 'error');
@@ -273,7 +272,7 @@ var Doodle = (function () {
           }
           history.pushState(null, null, '/' + response.data.slug);
           Utils.message('Doodle created successfully.', 'success');
-          messageElement.innerHTML = '';
+          headingElement.className = ''; // Remove loader.
         } else {
           Utils.message(response.error, 'error');
         }

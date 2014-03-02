@@ -350,7 +350,7 @@ header {
     right: 0;
   }
 
-  .doodle_heading {
+  #doodle_heading {
     text-align: center;
     height: 50px;
     background-color: @nice-blue;
@@ -358,6 +358,13 @@ header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
     margin: 0;
     position: relative;
+
+    &.heading_loader {
+      background-image: url('/public/img/loader_heading.gif');
+      background-size: 24px 24px;
+      background-repeat: no-repeat;
+      background-position: 460px center;
+    }
 
     #doodle_color {
       position: absolute;
@@ -368,7 +375,7 @@ header {
       display: inline-block;
       z-index: 99;
       cursor: pointer;
-      color: rgba(255, 255, 255, 0.6);
+      color: #ffffff;
 
       .pencil {
         position: absolute;
@@ -466,9 +473,9 @@ header {
       content: '';
       position: absolute;
       width: 100%;
-      bottom: 4px;
+      bottom: 3px;
       left: 0;
-      border-bottom: 1px dashed rgba(255,255,255,.4);
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.4);
     }
   }
 
