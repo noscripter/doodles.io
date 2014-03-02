@@ -359,21 +359,29 @@ header {
     margin: 0;
     position: relative;
 
-    .doodle_color {
+    #doodle_color {
       position: absolute;
       top: 0;
       left: 0;
-      background: rgba(255, 255, 255, 0.3);
-      border-right: rgba(255, 255, 255, 0.3);
       height: 50px;
       width: 50px;
       display: inline-block;
       z-index: 99;
       cursor: pointer;
+      color: rgba(255, 255, 255, 0.6);
+
+      .pencil {
+        position: absolute;
+        top: 12px;
+        left: 15px;
+        color: inherit;
+        font-size: 25px;
+      }
 
       &:hover {
         background: #ffffff;
         border-right: 1px solid rgba(0, 0, 0, 0.5);
+        color: @nice-blue;
       }
 
       &:hover ul {
@@ -392,22 +400,42 @@ header {
         background-color: #ffffff;
         border-right: 1px solid rgba(0, 0, 0, 0.5);
         border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-        width: 5.6rem;
+        width: 50px;
 
         li {
           a {
             display: block;
-            padding: 0.8rem 1.4rem;
+            padding: 0.8rem 1rem 0.7rem;
             text-align: left;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            border-top: 1px solid #e5e5e5;
+
+            .color_circle {
+              border-radius: 50%;
+              height: 20px;
+              width: 20px;
+              margin: 0 1rem 0 0;
+              display: inline-block;
+            }
 
             &:hover {
               background: #eeeeee;
             }
-          }
 
-          &:last-child a {
-            border: none;
+            &[data-color="black"] .color_circle {
+              background: black;
+            }
+
+            &[data-color="blue"] .color_circle {
+              background: blue;
+            }
+
+            &[data-color="red"] .color_circle {
+              background: red;
+            }
+
+            &[data-color="green"] .color_circle {
+              background: green;
+            }
           }
         }
       }

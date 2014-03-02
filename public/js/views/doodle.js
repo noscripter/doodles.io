@@ -9,6 +9,7 @@ var Doodle = (function () {
   var imageElement;
   var messageElement;
 
+  var colorElement;
   var colorElements;
   var color;
 
@@ -35,6 +36,7 @@ var Doodle = (function () {
       tempCanvasElement = document.createElement('canvas');
       messageElement = document.getElementById('save_text');
 
+      colorElement = document.getElementById('doodle_color');
       colorElements = document.getElementsByClassName('color_element');
       color = 'black';
 
@@ -212,6 +214,7 @@ var Doodle = (function () {
     colorElementClickHandler: function (e) {
       e.preventDefault();
       color = e.target.dataset.color;
+      colorElement.style.color = e.target.dataset.color;
     },
 
     bufferSave: function () {
