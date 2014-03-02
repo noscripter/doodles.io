@@ -16,7 +16,7 @@
       <div class="header_right">
       <nav>
         {{#if user}}
-        Howdy, {{user.username}}!&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/logout">Logout</a></strong>
+        Howdy, {{user.username}}!&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<a href="/user/{{user.username}}">Scrapbook</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/logout">Logout</a></strong>
         {{else}}
         <a href="/login">Login</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/register">Register</a></strong>
         {{/if}}
