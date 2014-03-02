@@ -23,15 +23,14 @@
     </div>
     {{#if doodle}}
     <div class="doodle_meta">
-      <img class="avatar" src="{{doodle.avatar}}" alt="" />
-      <span class="author">
-        <a href="/user/{{doodle._user.username}}">{{doodle.authorString}}</a>
+      <img class="avatar doodle_avatar" src="{{doodle.avatar}}" alt="" />
+      <span class="doodle_author">
+        <span class="doodle_verb">Doodle {{doodle.authorString}} by...</span>
+        <a href="/user/{{doodle._user.username}}">@{{doodle._user.username}}</a>
       </span>
-    </div>
-    {{/if}}
-    {{#if doodle.parent}}
-    <div class="doodle_meta">
+      {{#if doodle.parent}}
       <strong><a href="/{{doodle.parent}}">View original doodle &rarr;</a></strong>
+      {{/if}}
     </div>
     {{/if}}
   </div>
