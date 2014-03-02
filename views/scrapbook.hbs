@@ -1,18 +1,37 @@
 {{!< layout}}
 <ul id="scrapbook">
+  {{#if userIsOwner}}
+  <!-- The plus button -->
+  <li>
+    <div class="doodle_scrapbook">
+      <div class="doodle_ratio_push"></div>
+      <div class="doodle_ratio">
+        <div class="doodle_image doodle_new">
+          <a href="/new">
+            <i class="fa fa-plus plus"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </li>
+  {{/if}}
   {{#each doodles}}
   <li data-slug={{slug}}>
     <div class="doodle_scrapbook">
       <div class="doodle_ratio_push"></div>
       <div class="doodle_ratio">
         <div class="doodle_image">
-          <a class="doodle_image_link loader" href="/{{slug}}" data-image_url="{{image}}" data-image_alt="{{title}}"></a>
+          <a class="doodle_image_link loader" href="/{{slug}}" data-image_url="{{image}}" data-image_alt="{{title}}">
+          {{#if parent}}
+            <i class="fa fa-code-fork fork"></i>
+          {{/if}}
+          {{#if ../userIsOwner}}
+            <i class="fa fa-trash-o trash"></i>
+          {{/if}}
+          </a>
         </div>
       </div>
     </div>
-    {{#if ../userIsOwner}}
-      <input type="button" class="delete_button" value="Delete" />
-    {{/if}}
   </li>
   {{/each}}
 </ul>

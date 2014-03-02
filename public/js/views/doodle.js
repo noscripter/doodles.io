@@ -245,7 +245,9 @@ var Doodle = (function () {
         if (response.success) {
           if (response.data) {
             currentDoodle = response.data;
-            sessionStorage.setItem('checksum', response.data.checksum);
+            if (response.data.checksum) {
+              sessionStorage.setItem('checksum', response.data.checksum);
+            }
             history.pushState(null, null, '/' + response.data.slug);
             Utils.message('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'success', 6);
           } else {
@@ -263,7 +265,9 @@ var Doodle = (function () {
       Utils.ajax(options, function (response) {
         if (response.success) {
           currentDoodle = response.data;
-          sessionStorage.setItem('checksum', response.data.checksum);
+          if (response.data.checksum) {
+            sessionStorage.setItem('checksum', response.data.checksum);
+          }
           history.pushState(null, null, '/' + response.data.slug);
           Utils.message('Doodle created successfully.', 'success');
           messageElement.innerHTML = '';

@@ -23,17 +23,18 @@ var Scrapbook = (function () {
     },
 
     deleteClickHandler: function (e) {
+      var li = e.target.parentNode.parentNode.parentNode.parentNode;
       Utils.ajax({
-        url: '/' + e.target.parentNode.dataset.slug,
+        url: '/' + li.dataset.slug,
         method: 'DELETE',
         data: {
-          slug: e.target.parentNode.dataset.slug
+          slug: li.dataset.slug
         }
       }, function (res) {
         if (!res.success) {
           Utils.message(res.error, 'error');
         } else {
-          e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+          li.parentNode.removeChild(li);
           Utils.message('Doodle deleted successfully.', 'success');
         }
       });
