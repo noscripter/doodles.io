@@ -105,7 +105,7 @@ var Doodle = (function () {
 
       // Add event listeners for each colour selectable.
       for (var i = 0; i < colorElements.length; i++) {
-        colorElements[i].addEventListener('click', this.colorElementClickHandler.bind(this), false);
+        colorElements[i].addEventListener('click', this.colorElementClickHandler.bind(this));
       }
     },
 
@@ -211,6 +211,7 @@ var Doodle = (function () {
     },
 
     colorElementClickHandler: function (e) {
+      // Here, 'e' could either be the circle or the whole link.
       e.preventDefault();
       color = e.target.dataset.color;
       colorElement.style.color = e.target.dataset.color;
