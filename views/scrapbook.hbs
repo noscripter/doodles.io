@@ -22,12 +22,14 @@
       <div class="doodle_ratio">
         <div class="doodle_image">
           <a class="doodle_image_link loader" href="/{{slug}}" data-image_url="{{image}}" data-image_alt="{{title}}">
-          {{#if parent}}
-            <i class="fa fa-code-fork fork"></i>
-          {{/if}}
-          {{#if ../userIsOwner}}
-            <i class="fa fa-trash-o trash"></i>
-          {{/if}}
+            <div class="doodle_image_options">
+            {{#if parent}}
+              <i class="fa fa-code-fork fork"></i>
+            {{/if}}
+            {{#if ../userIsOwner}}
+              <i class="fa fa-trash-o trash"></i>
+            {{/if}}
+          </div>
           </a>
         </div>
       </div>
