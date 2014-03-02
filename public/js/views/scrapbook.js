@@ -7,7 +7,7 @@ var Scrapbook = (function () {
   return {
 
     init: function () {
-      deleteButtons = document.getElementsByClassName('delete_button');
+      deleteButtons = document.getElementsByClassName('trash');
       imageLinks = document.getElementsByClassName('doodle_image_link');
       imageCounter = 0;
 
@@ -23,7 +23,8 @@ var Scrapbook = (function () {
     },
 
     deleteClickHandler: function (e) {
-      var li = e.target.parentNode.parentNode.parentNode.parentNode;
+      e.preventDefault();
+      var li = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
       Utils.ajax({
         url: '/' + li.dataset.slug,
         method: 'DELETE',
