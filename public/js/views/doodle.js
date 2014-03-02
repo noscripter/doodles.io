@@ -214,7 +214,7 @@ var Doodle = (function () {
       // Here, 'e' could either be the circle or the whole link.
       e.preventDefault();
       color = e.target.dataset.color;
-      colorElement.style.color = e.target.dataset.color;
+      // colorElement.style.color = e.target.dataset.color;
     },
 
     bufferSave: function () {
