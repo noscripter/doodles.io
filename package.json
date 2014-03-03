@@ -40,6 +40,7 @@
   },
   "subdomain": "doodles.io",
   "scripts": {
+    "postinstall": "grunt",
     "start": ""
   },
   "engines": {
