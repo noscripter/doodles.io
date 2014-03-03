@@ -26,20 +26,23 @@ App.Scrapbook = (function () {
     deleteClickHandler: function (e) {
       e.preventDefault();
       var li = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-      App.Utils.ajax({
-        url: '/' + li.dataset.slug,
-        method: 'DELETE',
-        data: {
-          slug: li.dataset.slug
-        }
-      }, function (res) {
-        if (!res.success) {
-          App.Utils.message(res.error, 'error');
-        } else {
-          li.parentNode.removeChild(li);
-          App.Utils.message('Doodle deleted successfully.', 'success');
-        }
-      });
+      var confirm = window.confirm('Are you sure you want to delete this doodle?');
+      if (confirm) {
+        App.Utils.ajax({
+          url: '/' + li.dataset.slug,
+          method: 'DELETE',
+          data: {
+            slug: li.dataset.slug
+          }
+        }, function (res) {
+          if (!res.success) {
+            App.Utils.message(res.error, 'error');
+          } else {
+            li.parentNode.removeChild(li);
+            App.Utils.message('Doodle deleted successfully.', 'success');
+          }
+        });
+      }
     },
 
     imageHandler: function (element) {
