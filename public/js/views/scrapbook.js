@@ -26,7 +26,7 @@ App.Scrapbook = (function () {
     deleteClickHandler: function (e) {
       e.preventDefault();
       var li = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-      Utils.ajax({
+      App.Utils.ajax({
         url: '/' + li.dataset.slug,
         method: 'DELETE',
         data: {
