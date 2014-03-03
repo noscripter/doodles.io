@@ -3,8 +3,8 @@ node_js:
 - '0.10'
 before_install:
 - npm install -g grunt-cli
+install: npm install --fetch-only
 before_script:
-- npm install --fetch-only
 - grunt test
 notifications:
   email: true
