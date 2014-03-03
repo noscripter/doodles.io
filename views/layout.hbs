@@ -3,9 +3,13 @@
   <head>
     <title>Doodles.io</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    {{#if production}}
+    <link href="/public/prod/doodles.min.css" rel="stylesheet">
+    {{else}}
     <link href="/public/css/vendor/normalize.css" rel="stylesheet">
-    <link rel="stylesheet" href="/public/css/vendor/font-awesome.min.css">
+    <link href="/public/css/vendor/font-awesome.min.css" rel="stylesheet">
     <link href="/public/css/style.less" rel="stylesheet/less">
+    {{/if}}
   </head>
   <body>
     <div id="message"></div>
@@ -28,6 +32,11 @@
       <div class="clearfix"></div>
     </header>
     {{{body}}}
-    {{#scripts}}<script src="{{.}}"></script>{{/scripts}}
+    {{#if production}}
+    <script src="/public/prod/doodles.min.js"></script>
+    {{else}}
+    {{#vendor}}<script src="/{{.}}"></script>{{/vendor}}
+    {{#scripts}}<script src="/{{.}}"></script>{{/scripts}}
+    {{/if}}
   </body>
 </html>

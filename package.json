@@ -34,7 +34,14 @@
     "knox": "~0.8.9"
   },
   "devDependencies": {
-    "nodemon": "0.7.x"
+    "nodemon": "0.7.x",
+    "grunt": "0.4.x",
+    "grunt-contrib-jshint": "0.6.x",
+    "grunt-contrib-csslint": "0.1.x",
+    "grunt-contrib-uglify": "0.2.x",
+    "grunt-contrib-cssmin": "0.7.x",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-clean": "~0.5.0"
   },
   "subdomain": "doodles.io",
   "scripts": {
