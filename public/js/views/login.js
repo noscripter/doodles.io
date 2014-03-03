@@ -1,4 +1,5 @@
-var Login = (function () {
+App.Login = (function () {
+  'use strict';
 
   var loginForm;
 
@@ -20,7 +21,7 @@ var Login = (function () {
       var id = document.getElementById('id').value;
       var password = document.getElementById('password').value;
 
-      Utils.ajax({
+      App.Utils.ajax({
         method: 'POST',
         url: '/login',
         data: {
@@ -31,7 +32,7 @@ var Login = (function () {
         if (response.success) {
           window.location = '/new';
         } else {
-          Utils.message(response.error, 'error');
+          App.Utils.message(response.error, 'error');
         }
       }.bind(this));
     }
@@ -41,5 +42,5 @@ var Login = (function () {
 })();
 
 if (document.getElementById('login')) {
-  window.addEventListener('load', Login.init.bind(Login));
+  window.addEventListener('load', App.Login.init.bind(App.Login));
 }

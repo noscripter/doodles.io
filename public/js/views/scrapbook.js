@@ -1,4 +1,5 @@
-var Scrapbook = (function () {
+App.Scrapbook = (function () {
+  'use strict';
 
   var deleteButtons;
   var imageLinks;
@@ -24,7 +25,7 @@ var Scrapbook = (function () {
 
     deleteClickHandler: function (e) {
       var li = e.target.parentNode.parentNode.parentNode.parentNode;
-      Utils.ajax({
+      App.Utils.ajax({
         url: '/' + li.dataset.slug,
         method: 'DELETE',
         data: {
@@ -32,10 +33,10 @@ var Scrapbook = (function () {
         }
       }, function (res) {
         if (!res.success) {
-          Utils.message(res.error, 'error');
+          App.Utils.message(res.error, 'error');
         } else {
           li.parentNode.removeChild(li);
-          Utils.message('Doodle deleted successfully.', 'success');
+          App.Utils.message('Doodle deleted successfully.', 'success');
         }
       });
     },
@@ -43,8 +44,8 @@ var Scrapbook = (function () {
     imageHandler: function (element) {
       var image = new Image();
       image.crossOrigin = 'anonymous';
-      image.src = element.dataset.image_url + '?c=' + Date.now();
-      image.alt = element.dataset.image_alt;
+      image.src = element.dataset.imageUrl + '?c=' + Date.now();
+      image.alt = element.dataset.imageAlt;
       image.addEventListener('load', function () {
         element.className = element.className.replace(/\bloader\b/,'');
         element.appendChild(image);
@@ -60,5 +61,5 @@ var Scrapbook = (function () {
 }());
 
 if (document.getElementById('scrapbook')) {
-  window.addEventListener('load', Scrapbook.init.bind(Scrapbook), false);
+  window.addEventListener('load', App.Scrapbook.init.bind(App.Scrapbook), false);
 }

@@ -1,4 +1,5 @@
 var App = (function () {
+  'use strict';
 
   return {
 

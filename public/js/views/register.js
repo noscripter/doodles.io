@@ -1,4 +1,5 @@
-var Register = (function () {
+App.Register = (function () {
+  'use strict';
 
   var registerForm;
 
@@ -21,7 +22,7 @@ var Register = (function () {
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
 
-      Utils.ajax({
+      App.Utils.ajax({
         method: 'POST',
         url: '/register',
         data: {
@@ -33,7 +34,7 @@ var Register = (function () {
         if (response.success) {
           window.location = '/new';
         } else {
-          Utils.message(response.error, 'error');
+          App.Utils.message(response.error, 'error');
         }
       }.bind(this));
     }
@@ -43,5 +44,5 @@ var Register = (function () {
 })();
 
 if (document.getElementById('register')) {
-  window.addEventListener('load', Register.init.bind(Register));
+  window.addEventListener('load', App.Register.init.bind(App.Register));
 }

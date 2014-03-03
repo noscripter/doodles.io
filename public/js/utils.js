@@ -1,16 +1,17 @@
-var Utils = (function () {
+App.Utils = (function () {
+  'use strict';
 
   var messageTimer;
 
   return {
 
     message: function (message, type, delay) {
-      var type = type || 'info';
-      var delay = delay || 3;
       var timeoutDelay = 0;
       var messageElement = document.getElementById('message');
+      type = type || 'info';
+      delay = delay || 3;
 
-      if (messageElement.className == 'open') {
+      if (messageElement.className === 'open') {
         messageElement.className = '';
         clearTimeout(messageTimer);
         timeoutDelay = 200;
@@ -29,16 +30,16 @@ var Utils = (function () {
     ajax: function (options, callback) {
       var factories = [
         function () {
-          return new XMLHttpRequest()
+          return new XMLHttpRequest();
         },
         function () {
-          return new ActiveXObject('Msxml2.XMLHTTP')
+          return new window.ActiveXObject('Msxml2.XMLHTTP');
         },
         function () {
-          return new ActiveXObject('Msxml3.XMLHTTP')
+          return new window.ActiveXObject('Msxml3.XMLHTTP');
         },
         function () {
-          return new ActiveXObject('Microsoft.XMLHTTP')
+          return new window.ActiveXObject('Microsoft.XMLHTTP');
         }
       ];
       var method = options.method || 'GET';
@@ -70,17 +71,17 @@ var Utils = (function () {
             });
           }
         }
-      }
+      };
 
       function createXHRObject() {
         var xhr = null;
         for (var i = 0, l = factories.length; i < l; i++) {
-            try {
-              xhr = factories[i]();
-            } catch (e) {
-              continue;
-            }
-            break;
+          try {
+            xhr = factories[i]();
+          } catch (e) {
+            continue;
+          }
+          break;
         }
         return xhr;
       }

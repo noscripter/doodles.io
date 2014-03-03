@@ -1,4 +1,5 @@
-var Doodle = (function () {
+App.Doodle = (function () {
+  'use strict';
 
   var titleLength;
   var titleElement;
@@ -63,7 +64,7 @@ var Doodle = (function () {
       onPaintHandler;
 
       // Check to see if we're editing or creating a doodle.
-      if (typeof currentDoodle !== 'undefined') {
+      if (currentDoodle) {
         titleElement.value = currentDoodle.title || titlePlaceholder;
         titleElement.className = titleElement.value === titlePlaceholder ? 'placeholder' : '';
         titleLength = currentDoodle.title.length;
@@ -184,7 +185,7 @@ var Doodle = (function () {
       image.src = tempCanvasElement.toDataURL();
       image.onload = function () {
         context.drawImage(image, 0, 0);
-      }
+      };
 
       points = [];
     },
@@ -196,14 +197,14 @@ var Doodle = (function () {
       }
     },
 
-    titleFocusHandler: function (e) {
+    titleFocusHandler: function () {
       if (titleElement.value === titlePlaceholder) {
         titleElement.value = '';
         titleElement.className = '';
       }
     },
 
-    titleBlurHandler: function (e) {
+    titleBlurHandler: function () {
       if (titleElement.value === '') {
         titleElement.value = titlePlaceholder;
         titleElement.className = 'placeholder';
@@ -233,7 +234,7 @@ var Doodle = (function () {
         }
       };
 
-      if (typeof currentDoodle !== 'undefined') {
+      if (currentDoodle) {
         options.url = '/' + currentDoodle.slug;
         options.data.checksum = sessionStorage.checksum ? sessionStorage.checksum : null;
         options.data.parent = currentDoodle.slug;
@@ -245,7 +246,7 @@ var Doodle = (function () {
     },
 
     update: function (options) {
-      Utils.ajax(options, function (response) {
+      App.Utils.ajax(options, function (response) {
         if (response.success) {
           if (response.data) {
             currentDoodle = response.data;
@@ -253,29 +254,29 @@ var Doodle = (function () {
               sessionStorage.setItem('checksum', response.data.checksum);
             }
             history.pushState(null, null, '/' + response.data.slug);
-            Utils.message('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'success', 6);
+            App.Utils.message('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'success', 6);
           } else {
             // Data of a new doodle wasn't passed back, so the edit was accepted.
             headingElement.className = ''; // Remove loader (quiet update).
           }
         } else {
-          Utils.message(response.error, 'error');
+          App.Utils.message(response.error, 'error');
         }
       });
     },
 
     create: function (options) {
-      Utils.ajax(options, function (response) {
+      App.Utils.ajax(options, function (response) {
         if (response.success) {
           currentDoodle = response.data;
           if (response.data.checksum) {
             sessionStorage.setItem('checksum', response.data.checksum);
           }
           history.pushState(null, null, '/' + response.data.slug);
-          Utils.message('Doodle created successfully.', 'success');
+          App.Utils.message('Doodle created successfully.', 'success');
           headingElement.className = ''; // Remove loader.
         } else {
-          Utils.message(response.error, 'error');
+          App.Utils.message(response.error, 'error');
         }
       });
     }
@@ -285,5 +286,5 @@ var Doodle = (function () {
 })();
 
 if (document.getElementById('doodle')) {
-  window.addEventListener('load', Doodle.init.bind(Doodle));
+  window.addEventListener('load', App.Doodle.init.bind(App.Doodle));
 }
