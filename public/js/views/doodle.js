@@ -8,7 +8,6 @@ App.Doodle = (function () {
   var canvasElement;
   var tempCanvasElement;
   var imageElement;
-  var messageElement;
   var headingElement;
 
   var colorElement;
@@ -36,7 +35,6 @@ App.Doodle = (function () {
       canvasElement = document.getElementById('doodle_canvas');
       imageElement = document.getElementById('doodle_image');
       tempCanvasElement = document.createElement('canvas');
-      messageElement = document.getElementById('save_text');
       headingElement = document.getElementById('doodle_heading');
 
       colorElement = document.getElementById('doodle_color');
@@ -255,6 +253,7 @@ App.Doodle = (function () {
             }
             history.pushState(null, null, '/' + response.data.slug);
             App.Utils.message('You didn\'t have permission to edit this doodle, so we\'ve <strong>copied it to your account</strong> for you.', 'success', 6);
+            headingElement.className = ''; // Remove loader (quiet update).
           } else {
             // Data of a new doodle wasn't passed back, so the edit was accepted.
             headingElement.className = ''; // Remove loader (quiet update).
