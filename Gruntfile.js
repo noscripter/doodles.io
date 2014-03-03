@@ -1,5 +1,4 @@
 var fs = require('fs');
-var doodles = require('./package.json');
 var scripts = require('./scripts.json');
 
 module.exports = function (grunt) {
@@ -77,7 +76,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
-  grunt.registerTask('test', ['jshint']);
   grunt.registerTask('default', ['jshint', 'uglify', 'concat', 'less', 'clean']);
 
 };
