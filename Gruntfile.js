@@ -6,7 +6,6 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-
     jshint: {
       options: {
         browser: true,
@@ -31,7 +30,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
     uglify: {
       options: {
         banner: '/*\nDoodles.io v<%= pkg.version %>\nCopyright (c) 2014 Doodles.io (@doodlesio)\n*/\n'
@@ -42,7 +40,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
     concat: {
       options: {
         stripBanners: {
@@ -57,7 +54,6 @@ module.exports = function (grunt) {
         dest: 'public/prod/doodles.less'
       }
     },
-
     less: {
       options: {
         cleancss: true
@@ -68,7 +64,6 @@ module.exports = function (grunt) {
         }
       }
     },
-
     clean: {
       dist: {
         src: ['public/prod/doodles.less']
@@ -82,6 +77,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
+  grunt.registerTask('test', ['jshint']);
   grunt.registerTask('default', ['jshint', 'uglify', 'concat', 'less', 'clean']);
 
 };
