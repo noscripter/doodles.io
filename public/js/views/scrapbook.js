@@ -8,7 +8,7 @@ App.Scrapbook = (function () {
   return {
 
     init: function () {
-      deleteButtons = document.getElementsByClassName('delete_button');
+      deleteButtons = document.getElementsByClassName('trash');
       imageLinks = document.getElementsByClassName('doodle_image_link');
       imageCounter = 0;
 
@@ -24,8 +24,9 @@ App.Scrapbook = (function () {
     },
 
     deleteClickHandler: function (e) {
-      var li = e.target.parentNode.parentNode.parentNode.parentNode;
-      App.Utils.ajax({
+      e.preventDefault();
+      var li = e.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+      Utils.ajax({
         url: '/' + li.dataset.slug,
         method: 'DELETE',
         data: {
