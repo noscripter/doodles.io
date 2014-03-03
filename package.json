@@ -28,7 +28,7 @@
     "bcrypt": "~0.7.7",
     "express-hbs": "~0.7.9",
     "xtend": "~2.1.2",
-    "knox": "~0.8.9"
+    "knox": "~0.8.9",
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-concat": "~0.3.0",
