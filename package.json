@@ -1,7 +1,7 @@
 {
   "name": "doodles.io",
   "description": "A free service that allows you to send quick doodles to friends, colleagues or clients.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "lib/app.js",
   "homepage": "http://doodles.io",
   "private": true,
