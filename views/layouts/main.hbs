@@ -23,7 +23,7 @@
         {{#if user}}
         <strong><a href="/new">Create New Doodle</a></strong>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<a href="/user/{{user.username}}">Scrapbook</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<a href="/logout">Logout</a>
         {{else}}
-        <a href="/login">Login</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/register">Register</a></strong>
+        <strong><a href="/new">Create New Doodle</a></strong>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<a href="/login">Login</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<strong><a href="/register">Register</a></strong>
         {{/if}}
       </nav>
       {{#if user}}
