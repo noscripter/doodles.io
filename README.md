@@ -20,4 +20,4 @@ And there we go, you've just created your first doodle. In seconds.
 
 Doodles.io was handcrafted by [David Gauld](http://dcgauld.com) and [Josh Croad](http://joshcroad.com). You read their ramblings about technology by following them on Twitter: @[dcgauld](http://twitter.com/dcgauld) and @[joshcroad](http://twitter.com/joshcroad) respectively.
 
-Doodles.io is built in JavaScript using Node.js. It uses mongodb for data storage and is hosted on Heroku. It can also be cloned and run locally (after providing it with an active mongodb connection). Just be sure to install any dependancies (`npm install`) and boom! Navigate to `http://localhost:3000` to get started.
+Doodles.io is built in JavaScript using Node.js. It uses mongodb for data storage and is hosted on Heroku.
