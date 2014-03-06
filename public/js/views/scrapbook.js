@@ -20,7 +20,9 @@ App.Scrapbook = (function () {
         deleteButtons[i].addEventListener('click', this.deleteClickHandler.bind(this), false);
       }
 
-      this.imageHandler(imageLinks[0]);
+      for (var i = 0, l = imageLinks.length; i < l; i++) {
+        this.imageHandler(imageLinks[i]);
+      }
     },
 
     deleteClickHandler: function (e) {
@@ -53,10 +55,6 @@ App.Scrapbook = (function () {
       image.addEventListener('load', function () {
         element.className = element.className.replace(/\bloader\b/,'');
         element.appendChild(image);
-        imageCounter++;
-        if (imageCounter < imageLinks.length) {
-          this.imageHandler(imageLinks[imageCounter]);
-        }
       }.bind(this));
     }
 
