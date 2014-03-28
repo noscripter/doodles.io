@@ -16,11 +16,11 @@ App.Scrapbook = (function () {
     },
 
     bindEvents: function () {
-      for (var i = 0, l = deleteButtons.length; i < l; i++) {
+      var i;
+      for (i = 0, l = deleteButtons.length; i < l; i++) {
         deleteButtons[i].addEventListener('click', this.deleteClickHandler.bind(this), false);
       }
-
-      for (var i = 0, l = imageLinks.length; i < l; i++) {
+      for (i = 0, l = imageLinks.length; i < l; i++) {
         this.imageHandler(imageLinks[i]);
       }
     },
